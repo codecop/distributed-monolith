@@ -12,7 +12,7 @@ public class IssuesController {
         return "Hello World";
     }
 
-    @Get("/{number}")
+    @Get("/issues/{number}")
     public String issue(@PathVariable Integer number) {
         return "Issue # " + number + "!";
     }
