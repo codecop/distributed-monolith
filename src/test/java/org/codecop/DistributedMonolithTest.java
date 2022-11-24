@@ -42,6 +42,9 @@ class DistributedMonolithTest {
         String body = client.toBlocking().retrieve("/issues/12");
         assertNotNull(body);
         assertEquals("Issue # 12!", body);
+
+        // do again to see save
+        client.toBlocking().retrieve("/issues/12");
     }
 
     @Test

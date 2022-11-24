@@ -11,7 +11,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public Long id;
 
     @Column(name = "STUDENT_NAME", length = 50, nullable = true, unique = false)
     private String name;
@@ -31,6 +31,10 @@ public class Student {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }
 
 // see https://www.baeldung.com/jpa-entities
