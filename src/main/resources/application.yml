@@ -6,14 +6,19 @@ micronaut:
       classic:
         enabled: true
         connection-string: tcp://localhost:61616
+
 datasources:
   default:
     url: jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: ''
     driverClassName: org.h2.Driver
+
 jpa.default.properties.hibernate.hbm2ddl.auto: update
+jpa.default.entity-scan.packages: org.codecop
+
 netty:
   default:
     allocator:
       max-order: 3
+     
