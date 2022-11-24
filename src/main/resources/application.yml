@@ -10,6 +10,9 @@ micronaut:
         enabled: true
         connection-string: tcp://localhost:61616
 
+config.jms:
+  destinationQueue: example-messages
+  
 datasources:
   default:
     url: jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
