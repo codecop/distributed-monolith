@@ -1,6 +1,9 @@
 micronaut:
   application:
     name: distributedMonolith
+  server:
+    port: 80
+
   jms:
     activemq:
       classic:
