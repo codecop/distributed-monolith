@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: org.codecop
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [app-name, h2, hibernate-jpa, http-client, jackson-databind, java, java-application, jdbc-hikari, jms-activemq-classic, junit, logback, maven, micronaut-test-rest-assured, microstream, microstream-rest, netty-server, readme, shade, yaml]
