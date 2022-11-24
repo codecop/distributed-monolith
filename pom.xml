@@ -68,6 +68,11 @@
         <dependency>
             <groupId>io.micronaut.data</groupId>
             <artifactId>micronaut-data-hibernate-jpa</artifactId>
+            <!-- see https://github.com/soujava/micronaut-jpa/blob/master/pom.xml -->
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.views</groupId>
+            <artifactId>micronaut-views-handlebars</artifactId>
         </dependency>
 
         <dependency>

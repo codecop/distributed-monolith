@@ -3,6 +3,7 @@ package org.codecop;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,13 @@ class DistributedMonolithTest {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/hello"));
         assertEquals("Hello World", response);
         // see https://docs.micronaut.io/latest/guide/#runningServer
+    }
+
+    @Test
+    void testHelloWorldHtmlResponse() {
+        String response = client.toBlocking().retrieve(HttpRequest.GET("/hello.html"));
+        System.out.println(response);
+        assertTrue(response.startsWith("<!DOCTYPE html>"));
     }
 
     @Test

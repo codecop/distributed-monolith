@@ -1,11 +1,15 @@
 package org.codecop;
 
+import java.util.Map;
 import java.util.Optional;
 
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.views.View;
 import jakarta.inject.Inject;
 
 @Controller
@@ -34,6 +38,13 @@ public class IssuesController {
     public HttpStatus httpStatus() {
         return HttpStatus.CREATED;
         // https://docs.micronaut.io/latest/guide/#statusAnnotation
+    }
+
+    @Get("/hello.html")
+    @View("home")
+    public HttpResponse<Map<?, ?>> issueView() {
+        return HttpResponse.ok(CollectionUtils.mapOf("loggedIn", true, "username", "sdelamo"));
+        // https://micronaut-projects.github.io/micronaut-views/latest/guide/
     }
 
 }
