@@ -1,9 +1,15 @@
+# Distributed Monolith
+
+  mvnw mn:run
+  
 ## Micronaut 3.7.4 Documentation
 
+- [Launch](https://micronaut.io/launch)
 - [User Guide](https://docs.micronaut.io/3.7.4/guide/index.html)
 - [API Reference](https://docs.micronaut.io/3.7.4/api/index.html)
 - [Configuration Reference](https://docs.micronaut.io/3.7.4/guide/configurationreference.html)
 - [Micronaut Guides](https://guides.micronaut.io/index.html)
+
 ---
 
 ## Feature http-client documentation

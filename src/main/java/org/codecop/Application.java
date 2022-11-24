@@ -7,3 +7,5 @@ public class Application {
         Micronaut.run(Application.class, args);
     }
 }
+
+// see https://docs.micronaut.io/latest/guide/#runningServer

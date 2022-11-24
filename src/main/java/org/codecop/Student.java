@@ -15,3 +15,5 @@ public class Student {
     // fields, getters and setters
 
 }
+
+// see https://www.baeldung.com/jpa-entities
