@@ -1,15 +1,27 @@
 Thumbs.db
 .DS_Store
+
+# Maven/Gradle
 .gradle
 build/
 target/
 out/
+
 .micronaut/
+
+# IDEA
 .idea
 *.iml
 *.ipr
 *.iws
+
+# Eclipse
 .project
 .settings
 .classpath
 .factorypath
+
+# annotation processing
+/.apt_generated/
+/.apt_generated_tests/
+processors/
