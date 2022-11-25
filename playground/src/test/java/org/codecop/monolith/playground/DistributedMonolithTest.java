@@ -70,7 +70,7 @@ class DistributedMonolithTest {
                 () -> client.toBlocking().exchange("/return/"));
         assertEquals(404, e.getStatus().getCode());
     }
-    
+
     @Test
     void testHtmlResponse() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/hello.html"));
@@ -86,6 +86,19 @@ class DistributedMonolithTest {
 
         // do again to see save
         client.toBlocking().retrieve("/jpa/12");
+    }
+
+    @Inject
+    StringMessageProducer producer;
+    @Inject
+    TextStore store;
+
+    @Test
+    void sendAndReceiveJMS() throws InterruptedException {
+        assertEquals(0, store.messages.size());
+        producer.send("This is a message");
+        Thread.sleep(1000);
+        assertEquals(1, store.messages.size());
     }
 
 }

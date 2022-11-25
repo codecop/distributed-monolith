@@ -12,6 +12,7 @@ public class JsonController {
     @Get("/hello.json")
     @Produces(value = MediaType.APPLICATION_JSON)
     public HttpResponse<JsonData> helloJson() {
+        // see https://itnext.io/building-restful-apis-with-micronaut-98f4eb39211c
         return HttpResponse.ok(new JsonData("Hello World"));
     }
 
