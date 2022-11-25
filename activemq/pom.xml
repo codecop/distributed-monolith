@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.codecop</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.codecop.monolith</groupId>
     <artifactId>distributed-monolith-activemq</artifactId>
     <version>0.1</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>Cp1252</project.reporting.outputEncoding>
 
         <activemq.version>5.16.5</activemq.version> <!-- last for Java 8 -->
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>run-activemq</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>org.codecop.monolith.activemq.Application</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <!-- JMS dependencies -->
@@ -27,10 +50,11 @@
             <version>${activemq.version}</version>
         </dependency>
 
+        <!-- required by ActiveMQ -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.11</version> <!-- required by ActiveMQ -->
+            <version>1.2.11</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>

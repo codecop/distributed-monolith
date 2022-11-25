@@ -1,4 +1,4 @@
-package org.codecop.activemq;
+package org.codecop.monolith.activemq;
 
 import org.apache.activemq.broker.BrokerService;
 
