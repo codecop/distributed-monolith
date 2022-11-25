@@ -2,7 +2,7 @@ package org.codecop.monolith.activemq;
 
 import org.apache.activemq.broker.BrokerService;
 
-public class Application {
+public class Start {
 
     public static void main(String[] args) throws Exception {
         // see https://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html
