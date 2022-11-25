@@ -1,4 +1,4 @@
-package org.codecop;
+package org.codecop.monolith.playground;
 
 import java.util.Map;
 import java.util.Optional;

@@ -25,7 +25,7 @@
         <micronaut.version>3.7.4</micronaut.version>
         <micronaut.runtime>netty</micronaut.runtime>
 
-        <exec.mainClass>org.codecop.Application</exec.mainClass>
+        <exec.mainClass>org.codecop.monolith.playground.Application</exec.mainClass>
     </properties>
 
     <dependencies>

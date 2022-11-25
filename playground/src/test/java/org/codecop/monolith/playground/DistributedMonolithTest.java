@@ -1,4 +1,4 @@
-package org.codecop;
+package org.codecop.monolith.playground;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

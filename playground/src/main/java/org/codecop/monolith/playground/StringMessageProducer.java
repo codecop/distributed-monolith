@@ -1,4 +1,4 @@
-package org.codecop;
+package org.codecop.monolith.playground;
 
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 

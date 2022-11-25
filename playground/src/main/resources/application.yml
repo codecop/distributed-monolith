@@ -21,7 +21,7 @@ datasources:
     driverClassName: org.h2.Driver
 
 jpa.default.properties.hibernate.hbm2ddl.auto: update
-jpa.default.entity-scan.packages: org.codecop
+jpa.default.entity-scan.packages: org.codecop.monolith
 
 netty:
   default:
