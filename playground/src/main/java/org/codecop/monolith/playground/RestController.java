@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.PathVariable;
 public class RestController {
 
     @Get("/hello")
-    public String issue() {
+    public String hello() {
         return "Hello World";
     }
 
