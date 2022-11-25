@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
@@ -35,37 +36,50 @@ class DistributedMonolithTest {
     void testHelloWorldResponse() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/hello"));
         assertEquals("Hello World", response);
-        // see https://docs.micronaut.io/latest/guide/#runningServer
     }
 
     @Test
-    void testHelloWorldHtmlResponse() {
+    void testStatusCodeResponse() {
+        HttpResponse<?> response = client.toBlocking().exchange(HttpRequest.GET("/http-status"));
+        assertEquals(201, response.code());
+    }
+
+    @Test
+    void testPathVariable() {
+        String body = client.toBlocking().retrieve("/return/42");
+        assertNotNull(body);
+        assertEquals("Issue # 42!", body);
+    }
+
+    @Test
+    void testShowWithInvalidInteger() {
+        HttpClientResponseException e = assertThrows(HttpClientResponseException.class,
+                () -> client.toBlocking().exchange("/return/hello"));
+        assertEquals(400, e.getStatus().getCode());
+    }
+
+    @Test
+    void testIssueWithoutNumber() {
+        HttpClientResponseException e = assertThrows(HttpClientResponseException.class,
+                () -> client.toBlocking().exchange("/return/"));
+        assertEquals(404, e.getStatus().getCode());
+    }
+    
+    @Test
+    void testHtmlResponse() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/hello.html"));
         System.out.println(response);
         assertTrue(response.startsWith("<!DOCTYPE html>"));
     }
 
     @Test
-    public void testIssue() {
-        String body = client.toBlocking().retrieve("/issues/12");
+    void testJpa() {
+        String body = client.toBlocking().retrieve("/jpa/12");
         assertNotNull(body);
         assertEquals("Issue # 12!", body);
 
         // do again to see save
-        client.toBlocking().retrieve("/issues/12");
+        client.toBlocking().retrieve("/jpa/12");
     }
 
-    @Test
-    public void testShowWithInvalidInteger() {
-        HttpClientResponseException e = assertThrows(HttpClientResponseException.class,
-                () -> client.toBlocking().exchange("/issues/hello"));
-        assertEquals(400, e.getStatus().getCode());
-    }
-
-    @Test
-    public void testIssueWithoutNumber() {
-        HttpClientResponseException e = assertThrows(HttpClientResponseException.class,
-                () -> client.toBlocking().exchange("/issues/"));
-        assertEquals(404, e.getStatus().getCode());
-    }
 }
