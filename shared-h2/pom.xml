@@ -4,7 +4,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.codecop.monolith</groupId>
-    <artifactId>distributed-monolith-h2</artifactId>
+    <artifactId>distributed-monolith-shared-h2</artifactId>
     <version>0.1</version>
 
     <properties>

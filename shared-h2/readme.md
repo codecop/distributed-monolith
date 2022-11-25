@@ -1,4 +1,4 @@
-# Distributed Monolith Service 'h2'
+# Distributed Monolith Service 'shared H2'
 
 This is an [H2 Database Engine](http://h2database.com/).
 
@@ -7,7 +7,7 @@ This is an [H2 Database Engine](http://h2database.com/).
 You can run it with the exec maven plugin like this:
 
 ```
-cd h2
+cd shared-h2
 ../mvnw compile exec:java
 ```
 
