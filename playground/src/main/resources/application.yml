@@ -22,6 +22,7 @@ config.jms:
 datasources:
   default:
     url: jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+#   url: jdbc:h2:tcp://localhost:9092/~/devDb;LOCK_TIMEOUT=10000
     username: sa
     password: ''
     driverClassName: org.h2.Driver
