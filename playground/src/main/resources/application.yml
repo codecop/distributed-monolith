@@ -3,6 +3,12 @@ micronaut:
     name: distributedMonolith
   server:
     port: 80
+  router:
+    static-resources: 
+        default:
+            enabled: true
+            mapping: /**
+            paths: classpath:public
 
   jms:
     activemq:
