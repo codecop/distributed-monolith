@@ -4,7 +4,7 @@ public class Start {
 
     public static void main(String[] args) throws Exception {
         // see https://www.h2database.com/javadoc/org/h2/tools/Server.html
-        org.h2.tools.Server.main(new String[] { //
+        Server.main(new String[] { //
                 "-tcp", //
                 "-tcpPort", "9092", //
                 "-tcpAllowOthers", //
