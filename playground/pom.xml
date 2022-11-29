@@ -173,6 +173,7 @@
                     <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
 
                     <annotationProcessorPaths combine.children="append">
+                        <!-- 
                         <path>
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-http-validation</artifactId>
@@ -183,15 +184,17 @@
                             <artifactId>micronaut-microstream-annotations</artifactId>
                             <version>${micronaut.microstream.version}</version>
                         </path>
+                         -->
                         <path>
+                            <!-- runtime TX support -->
                             <groupId>io.micronaut.data</groupId>
                             <artifactId>micronaut-data-processor</artifactId>
                             <version>${micronaut.data.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <arg>-Amicronaut.processing.group=org.codecop</arg>
-                        <arg>-Amicronaut.processing.module=distributed-monolith</arg>
+                        <arg>-Amicronaut.processing.group=org.codecop.monolith</arg>
+                        <arg>-Amicronaut.processing.module=distributed-monolith-playground</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
