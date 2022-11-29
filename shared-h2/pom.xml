@@ -3,39 +3,21 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.codecop.monolith</groupId>
+
+    <parent>
+        <groupId>org.codecop.monolith</groupId>
+        <artifactId>distributed-monolith-aall-modules</artifactId>
+        <version>0.1</version>
+        <relativePath>../</relativePath>
+    </parent>
+
     <artifactId>distributed-monolith-shared-h2</artifactId>
-    <version>0.1</version>
 
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>Cp1252</project.reporting.outputEncoding>
-
         <h2.version>2.1.214</h2.version>
-    </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>run-h2</id>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>org.codecop.monolith.h2.Start</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+        <exec.mainClass>org.codecop.monolith.h2.Start</exec.mainClass>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -44,5 +26,47 @@
             <version>${h2.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>${exec.mainClass}</Main-Class>
+                        </manifestEntries>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-executable-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run-it</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>${exec.mainClass}</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
