@@ -78,27 +78,17 @@ class DistributedMonolithTest {
         assertTrue(response.startsWith("<!DOCTYPE html>"));
     }
 
+    @Inject
+    StringMessageProducer producer;
+    @Inject
+    TextStore store;
+
     @Test
-    void testJpa() {
-        String body = client.toBlocking().retrieve("/jpa/12");
-        assertNotNull(body);
-        assertEquals("Issue # 12!", body);
-
-        // do again to see save
-        client.toBlocking().retrieve("/jpa/12");
+    void sendAndReceiveJMS() throws InterruptedException {
+        assertEquals(0, store.messages.size());
+        producer.send("This is a message");
+        Thread.sleep(1000);
+        assertEquals(1, store.messages.size());
     }
-
-//x    @Inject
-//x    StringMessageProducer producer;
-//x    @Inject
-//x    TextStore store;
-//x
-//x    @Test
-//x    void sendAndReceiveJMS() throws InterruptedException {
-//x        assertEquals(0, store.messages.size());
-//x        producer.send("This is a message");
-//x        Thread.sleep(1000);
-//x        assertEquals(1, store.messages.size());
-//x    }
 
 }

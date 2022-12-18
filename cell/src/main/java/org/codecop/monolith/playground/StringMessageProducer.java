@@ -6,10 +6,10 @@ import io.micronaut.jms.annotations.JMSProducer;
 import io.micronaut.jms.annotations.Queue;
 import io.micronaut.messaging.annotation.MessageBody;
 
-//x@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)
+@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)
 public interface StringMessageProducer {
 
-    //x@Queue("${config.jms.destinationQueue}")
+    @Queue("${config.jms.destinationQueue}")
     void send(@MessageBody String body);
 
     // see https://github.com/tylervz/amq-jms-example

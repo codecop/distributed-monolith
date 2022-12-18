@@ -79,49 +79,6 @@
         -->
 
         <dependency>
-            <!-- runtime TX support -->
-            <groupId>io.micronaut.data</groupId>
-            <artifactId>micronaut-data-hibernate-jpa</artifactId>
-            <!-- see https://github.com/soujava/micronaut-jpa/blob/master/pom.xml -->
-            <exclusions>
-                <!-- duplicate with javax.transaction -->
-                <exclusion>
-                    <groupId>jakarta.transaction</groupId>
-                    <artifactId>jakarta.transaction-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- not needed
-        <dependency>
-            <groupId>io.micronaut.sql</groupId>
-            <artifactId>micronaut-hibernate-jpa</artifactId>
-            <exclusions>
-                - duplicate with jakarta.transaction-api -
-                <exclusion>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>javax.transaction-api</artifactId>
-                </exclusion>
-                - duplicate with jakarta.persistence-api -
-                <exclusion>
-                    <groupId>javax.persistence</groupId>
-                    <artifactId>javax.persistence-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        -->
-        <dependency>
-            <!-- runtime EntityManager -->
-            <groupId>io.micronaut.sql</groupId>
-            <artifactId>micronaut-jdbc-hikari</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
             <!-- compile @View -->
             <groupId>io.micronaut.views</groupId>
             <artifactId>micronaut-views-handlebars</artifactId>
@@ -194,7 +151,7 @@
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-Amicronaut.processing.group=org.codecop.monolith</arg>
-                        <arg>-Amicronaut.processing.module=distributed-monolith-playground</arg>
+                        <arg>-Amicronaut.processing.module=distributed-gol-cell</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
