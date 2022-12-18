@@ -26,11 +26,12 @@ public class Life {
         this.alive = this.alive && countNeighbours == 2;
     }
 
+    // for JSON mapper
     public boolean isAlive() {
         return alive;
     }
 
-    /* only tests */ void setAlive(boolean alive) {
+    /* only for tests */ void setAlive(boolean alive) {
         this.alive = alive;
     }
 

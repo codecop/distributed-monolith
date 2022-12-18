@@ -12,6 +12,7 @@ public class Position {
     private int x;
     private int y;
 
+    // for JSON mapper
     public Position() {
     }
 
@@ -24,22 +25,27 @@ public class Position {
         return Math.abs(x - other.x) <= 1 && Math.abs(y - other.y) <= 1;
     }
 
+    // for JSON mapper
     public int getX() {
         return x;
     }
 
+    // for JSON mapper
     public void setX(int x) {
         this.x = x;
     }
 
+    // for JSON mapper
     public int getY() {
         return y;
     }
 
+    // for JSON mapper
     public void setY(int y) {
         this.y = y;
     }
 
+    // only for test
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

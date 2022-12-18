@@ -46,9 +46,13 @@ class CellTest {
         // assertAlive(true);
 
         ticker.tick("");
-        Thread.sleep(1000);
+        waitForJms();
 
         assertAlive(false);
+    }
+
+    private void waitForJms() throws InterruptedException {
+        Thread.sleep(500);
     }
 
     @Inject
@@ -59,12 +63,25 @@ class CellTest {
         status.setAlive(true);
         neighbours.report(new Position(1, 1));
         neighbours.report(new Position(1, 3));
-        Thread.sleep(1000);
+        waitForJms();
 
         ticker.tick("");
-        Thread.sleep(1000);
+        waitForJms();
 
         assertAlive(true);
+    }
+
+    @Test
+    void cellWithTwoNeighboursOutsideDies() throws InterruptedException {
+        status.setAlive(true);
+        neighbours.report(new Position(3, 1));
+        neighbours.report(new Position(3, 3));
+        waitForJms();
+        
+        ticker.tick("");
+        waitForJms();
+        
+        assertAlive(false);
     }
 
     // seed message

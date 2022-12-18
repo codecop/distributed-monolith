@@ -14,6 +14,8 @@ public class JmsListener {
 
     @Inject
     private Life status;
+    @Inject
+    private Position position;
 
     private int countNeighbours;
 
@@ -25,6 +27,8 @@ public class JmsListener {
 
     @Queue(value = "${config.jms.aliveQueue}", concurrency = "1-5")
     public void onLivingNeighbour(@MessageBody Position at) {
-        countNeighbours++;
+        if (position.isNext(at)) {
+            countNeighbours++;
+        }
     }
 }
