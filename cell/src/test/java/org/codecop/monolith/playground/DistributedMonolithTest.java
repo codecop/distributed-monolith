@@ -39,12 +39,6 @@ class DistributedMonolithTest {
     }
 
     @Test
-    void testHelloJsonResponse() {
-        String response = client.toBlocking().retrieve(HttpRequest.GET("/hello.json"));
-        assertEquals("{\"text\":\"Hello World\"}", response);
-    }
-
-    @Test
     void testStatusCodeResponse() {
         HttpResponse<?> response = client.toBlocking().exchange(HttpRequest.GET("/http-status"));
         assertEquals(201, response.code());

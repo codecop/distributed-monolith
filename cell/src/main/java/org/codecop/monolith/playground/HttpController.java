@@ -7,13 +7,12 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 
 @Controller
-public class JsonController {
+public class HttpController {
 
-    @Get("/hello.json")
+    @Get("/position.json")
     @Produces(value = MediaType.APPLICATION_JSON)
-    public HttpResponse<JsonData> helloJson() {
-        // see https://itnext.io/building-restful-apis-with-micronaut-98f4eb39211c
-        return HttpResponse.ok(new JsonData("Hello World"));
+    public HttpResponse<Position> helloJson() {
+        return HttpResponse.ok(new Position(0, 0));
     }
 
 }
