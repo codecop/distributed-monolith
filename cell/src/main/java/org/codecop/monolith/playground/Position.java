@@ -20,6 +20,10 @@ public class Position {
         this.y = y;
     }
 
+    public boolean isNext(Position other) {
+        return Math.abs(x - other.x) <= 1 && Math.abs(y - other.y) <= 1;
+    }
+
     public int getX() {
         return x;
     }
