@@ -25,9 +25,7 @@
 
     <modules>
         <module>activemq</module>
-        <module>kafka</module>
-        <module>playground</module>
-        <module>shared-h2</module>
+        <module>cell</module>
     </modules>
 
     <build>
