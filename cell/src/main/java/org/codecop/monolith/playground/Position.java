@@ -45,7 +45,6 @@ public class Position {
         this.y = y;
     }
 
-    // only for test
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

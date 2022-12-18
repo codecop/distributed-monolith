@@ -7,7 +7,7 @@ import jakarta.inject.Singleton;
 public class Model {
 
     @Inject
-    private Life status;
+    private Life life;
     @Inject
     private Position position;
 
@@ -17,7 +17,7 @@ public class Model {
     public void tick(int clock) {
         if (clock > lastClock) {
             lastClock = clock;
-            status.withNeighbours(countNeighbours);
+            life.withNeighbours(countNeighbours);
             countNeighbours = 0;
         }
     }
@@ -28,12 +28,18 @@ public class Model {
         }
     }
 
-    public Life getStatus() {
-        return status;
+    public Life getLife() {
+        return life;
     }
 
     public Position getPosition() {
         return position;
+    }
+
+    public void seed(Position at) {
+        if (position.equals(at)) {
+            life.seed();
+        }
     }
 
 }

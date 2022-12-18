@@ -20,12 +20,15 @@ class CellTest {
     @Inject
     Life status;
 
+    @Inject
+    Position position;
+
     static int clock;
 
     @Test
     void cellHasPosition() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/position.json"));
-        assertEquals("{\"x\":1,\"y\":2}", response);
+        assertEquals("{\"x\":" + position.getX() + ",\"y\":" + position.getY() + "}", response);
     }
 
     @Test
@@ -67,8 +70,8 @@ class CellTest {
     @Test
     void cellWithTwoNeighboursLivesOn() throws InterruptedException {
         status.setAlive(true);
-        neighbours.report(new Position(1, 1));
-        neighbours.report(new Position(1, 3));
+        neighbours.report(new Position(position.getX(), position.getY() - 1));
+        neighbours.report(new Position(position.getX(), position.getY() + 1));
         waitForJms();
 
         tick();
@@ -88,5 +91,27 @@ class CellTest {
         assertAlive(false);
     }
 
-    // seed message
+    @Inject
+    SeedProducer seeder;
+
+    @Test
+    void seedThisCell() throws InterruptedException {
+        status.setAlive(false);
+
+        seeder.seed(position);
+        waitForJms();
+
+        assertAlive(true);
+    }
+
+    @Test
+    void seedDifferentCell() throws InterruptedException {
+        status.setAlive(false);
+
+        seeder.seed(new Position(position.getX() + 1, position.getY() + 1));
+        waitForJms();
+
+        assertAlive(false);
+    }
+
 }

@@ -15,8 +15,9 @@ micronaut:
         connection-string: tcp://localhost:61616
 
 config.jms:
-  tickQueue: tick-messages
+  seedQueue: seed-messages
   aliveQueue: alive-messages
+  tickQueue: tick-messages
   
 netty:
   default:

@@ -19,7 +19,7 @@ public class StatusController {
 
     @Get("/alive.json")
     public HttpResponse<Life> status() {
-        return HttpResponse.ok(model.getStatus());
+        return HttpResponse.ok(model.getLife());
     }
 
     @Get("/position.json")

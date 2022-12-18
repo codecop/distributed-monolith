@@ -16,13 +16,18 @@ public class JmsListener {
     @Inject
     private Model model;
 
-    @Queue(value = "${config.jms.tickQueue}", concurrency = "1-5")
-    public void onTick(@MessageBody int clock) {
-        model.tick(clock);
+    @Queue(value = "${config.jms.seedQueue}", concurrency = "1-5")
+    public void onSeed(@MessageBody Position at) {
+        model.seed(at);
     }
 
     @Queue(value = "${config.jms.aliveQueue}", concurrency = "1-5")
     public void onLivingNeighbour(@MessageBody Position at) {
         model.recordLivingNeighbour(at);
+    }
+
+    @Queue(value = "${config.jms.tickQueue}", concurrency = "1-5")
+    public void onTick(@MessageBody int clock) {
+        model.tick(clock);
     }
 }

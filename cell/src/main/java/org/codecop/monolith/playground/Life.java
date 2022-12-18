@@ -23,6 +23,10 @@ public class Life {
         this.alive = alive;
     }
 
+    public void seed() {
+        this.alive = true;
+    }
+
     public void withNeighbours(int countNeighbours) {
         this.alive = (this.alive && countNeighbours == 2) || countNeighbours == 3;
     }
