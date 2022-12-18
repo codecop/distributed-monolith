@@ -28,6 +28,7 @@ class CellTest {
 
     @Test
     void newCellIsDead() {
+        status.setAlive(false); // not first test
         assertAlive(false);
     }
 
@@ -37,17 +38,33 @@ class CellTest {
     }
 
     @Inject
-    TickProducer producer;
+    TickProducer ticker;
 
     @Test
     void cellDiesWithoutNeighbours() throws InterruptedException {
         status.setAlive(true);
         // assertAlive(true);
 
-        producer.tick("");
+        ticker.tick("");
         Thread.sleep(1000);
-        
+
         assertAlive(false);
+    }
+
+    @Inject
+    NeighbourProducer neighbours;
+
+    @Test
+    void cellWithTwoNeighboursLivesOn() throws InterruptedException {
+        status.setAlive(true);
+        neighbours.report(new Position(1, 1));
+        neighbours.report(new Position(1, 3));
+        Thread.sleep(1000);
+
+        ticker.tick("");
+        Thread.sleep(1000);
+
+        assertAlive(true);
     }
 
     // seed message
