@@ -33,10 +33,6 @@
         -->
         <dependency>
             <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-http-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-server-netty</artifactId>
         </dependency>
         <!-- transitive
@@ -46,7 +42,7 @@
         </dependency>
         -->
         <dependency>
-            <!-- copmpile DTO -->
+            <!-- compile DTO -->
             <groupId>io.micronaut.serde</groupId>
             <artifactId>micronaut-serde-jackson</artifactId>
         </dependency>
@@ -62,28 +58,6 @@
             </exclusions>
         </dependency>
         
-        <!--        
-        <dependency>
-            <groupId>io.micronaut.microstream</groupId>
-            <artifactId>micronaut-microstream</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.microstream</groupId>
-            <artifactId>micronaut-microstream-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.microstream</groupId>
-            <artifactId>micronaut-microstream-rest</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
-
-        <dependency>
-            <!-- compile @View -->
-            <groupId>io.micronaut.views</groupId>
-            <artifactId>micronaut-views-handlebars</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -105,13 +79,11 @@
             <artifactId>micronaut-test-junit5</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- 
         <dependency>
-            <groupId>io.micronaut.test</groupId>
-            <artifactId>micronaut-test-rest-assured</artifactId>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-http-client</artifactId>
             <scope>test</scope>
         </dependency>
-        -->
     </dependencies>
 
     <build>
@@ -119,36 +91,11 @@
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
-                <configuration>
-                </configuration>
             </plugin>
 
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- Uncomment to enable incremental compilation -->
-                    <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-
-                    <annotationProcessorPaths combine.children="append">
-                        <!-- 
-                        <path>
-                            <groupId>io.micronaut</groupId>
-                            <artifactId>micronaut-http-validation</artifactId>
-                            <version>${micronaut.version}</version>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut.microstream</groupId>
-                            <artifactId>micronaut-microstream-annotations</artifactId>
-                            <version>${micronaut.microstream.version}</version>
-                        </path>
-                         -->
-                        <path>
-                            <!-- runtime TX support -->
-                            <groupId>io.micronaut.data</groupId>
-                            <artifactId>micronaut-data-processor</artifactId>
-                            <version>${micronaut.data.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-Amicronaut.processing.group=org.codecop.monolith</arg>
                         <arg>-Amicronaut.processing.module=distributed-gol-cell</arg>
