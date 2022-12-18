@@ -7,13 +7,20 @@ import jakarta.inject.Singleton;
 @Serdeable
 public class Status {
 
+    public static final Status ALIVE = new Status(true);
+    public static final Status DEAD = new Status(false);
+
     private boolean alive;
 
     public Status() {
     }
 
-    public Status(boolean alive) {
+    private Status(boolean alive) {
         this.alive = alive;
+    }
+
+    public void withNeighbours(int countNeighbours) {
+        this.alive = this.alive && countNeighbours == 2;
     }
 
     public boolean isAlive() {
