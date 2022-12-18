@@ -20,7 +20,7 @@ class CellTest {
     @Test
     void cellHasPosition() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/position.json"));
-        assertEquals("{\"x\":0,\"y\":0}", response);
+        assertEquals("{\"x\":1,\"y\":2}", response);
     }
 
     // cell is dead

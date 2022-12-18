@@ -2,8 +2,10 @@ package org.codecop.monolith.playground;
 
 import java.util.Objects;
 
+import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.serde.annotation.Serdeable;
 
+@ConfigurationProperties("position")
 @Serdeable
 public class Position {
 
