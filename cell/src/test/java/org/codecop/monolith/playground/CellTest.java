@@ -17,6 +17,9 @@ class CellTest {
     @Client("/")
     HttpClient client;
 
+    @Inject
+    Status status;
+
     @Test
     void cellHasPosition() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/position.json"));
@@ -25,11 +28,28 @@ class CellTest {
 
     @Test
     void newCellIsDead() {
-        String response = client.toBlocking().retrieve(HttpRequest.GET("/alive.json"));
-        assertEquals("{\"alive\":false}", response);
+        assertAlive(false);
     }
 
-    // cell is dead
+    private void assertAlive(boolean state) {
+        String response = client.toBlocking().retrieve(HttpRequest.GET("/alive.json"));
+        assertEquals("{\"alive\":" + state + "}", response);
+    }
+
+    @Inject
+    TickProducer producer;
+
+    @Test
+    void cellDiesWithoutNeighbours() throws InterruptedException {
+        status.setAlive(true);
+        // assertAlive(true);
+
+        producer.tick("");
+        Thread.sleep(1000);
+        
+        assertAlive(false);
+    }
+
     // seed message
     // cell is alive
 }

@@ -7,11 +7,9 @@ import io.micronaut.jms.annotations.Queue;
 import io.micronaut.messaging.annotation.MessageBody;
 
 @JMSProducer(CONNECTION_FACTORY_BEAN_NAME)
-public interface StringMessageProducer {
+public interface TickProducer {
 
-    @Queue("${config.jms.destinationQueue}")
-    void send(@MessageBody String body);
+    @Queue("${config.jms.tickQueue}")
+    void tick(@MessageBody String unused);
 
-    // see https://github.com/tylervz/amq-jms-example
-    // see https://micronaut-projects.github.io/micronaut-jms/2.1.0/guide/index.html
 }

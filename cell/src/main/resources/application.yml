@@ -21,7 +21,7 @@ micronaut:
         connection-string: tcp://localhost:61616
 
 config.jms:
-  destinationQueue: example-messages
+  tickQueue: tick-messages
   
 netty:
   default:
