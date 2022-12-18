@@ -23,6 +23,12 @@ class CellTest {
         assertEquals("{\"x\":1,\"y\":2}", response);
     }
 
+    @Test
+    void newCellIsDead() {
+        String response = client.toBlocking().retrieve(HttpRequest.GET("/alive.json"));
+        assertEquals("{\"alive\":false}", response);
+    }
+
     // cell is dead
     // seed message
     // cell is alive
