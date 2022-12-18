@@ -6,12 +6,12 @@
 
     <parent>
         <groupId>org.codecop.monolith</groupId>
-        <artifactId>distributed-monolith-aall-modules</artifactId>
+        <artifactId>distributed-gol-aall-modules</artifactId>
         <version>0.1</version>
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>distributed-monolith-activemq</artifactId>
+    <artifactId>distributed-gol-activemq</artifactId>
 
     <properties>
         <activemq.version>5.16.5</activemq.version> <!-- last for Java 8 -->

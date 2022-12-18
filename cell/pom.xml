@@ -6,12 +6,12 @@
 
     <parent>
         <groupId>org.codecop.monolith</groupId>
-        <artifactId>distributed-monolith-aall-modules</artifactId>
+        <artifactId>distributed-gol-aall-modules</artifactId>
         <version>0.1</version>
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>distributed-monolith-playground</artifactId>
+    <artifactId>distributed-gol-cell</artifactId>
 
     <properties>
         <!-- <micronaut.version>3.7.4</micronaut.version> -->
