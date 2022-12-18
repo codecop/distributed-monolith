@@ -5,21 +5,24 @@ import jakarta.inject.Singleton;
 
 @Singleton
 @Serdeable
-public class Status {
+public class Life {
 
-    public static final Status ALIVE = new Status(true);
-    public static final Status DEAD = new Status(false);
+    public static final Life ALIVE = new Life(true);
+    public static final Life DEAD = new Life(false);
 
     private boolean alive;
 
-    public Status() {
+    // initial construction by IoC
+    public Life() {
+        this(false);
     }
 
-    private Status(boolean alive) {
+    private Life(boolean alive) {
         this.alive = alive;
     }
 
     public void withNeighbours(int countNeighbours) {
+        // TODO incomplete
         this.alive = this.alive && countNeighbours == 2;
     }
 
@@ -27,7 +30,7 @@ public class Status {
         return alive;
     }
 
-    public void setAlive(boolean alive) {
+    /* only tests */ void setAlive(boolean alive) {
         this.alive = alive;
     }
 

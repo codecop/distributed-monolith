@@ -13,7 +13,7 @@ import jakarta.inject.Singleton;
 public class JmsListener {
 
     @Inject
-    private Status status;
+    private Life status;
 
     private int countNeighbours;
 
@@ -23,8 +23,8 @@ public class JmsListener {
         countNeighbours = 0;
     }
 
-    @Queue(value = "${config.jms.neighbourQueue}", concurrency = "1-5")
-    public void onNeighbour(@MessageBody Position livingPosition) {
+    @Queue(value = "${config.jms.aliveQueue}", concurrency = "1-5")
+    public void onLivingNeighbour(@MessageBody Position at) {
         countNeighbours++;
     }
 }

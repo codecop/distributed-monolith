@@ -18,7 +18,7 @@ class CellTest {
     HttpClient client;
 
     @Inject
-    Status status;
+    Life status;
 
     @Test
     void cellHasPosition() {
@@ -52,7 +52,7 @@ class CellTest {
     }
 
     @Inject
-    NeighbourProducer neighbours;
+    ReportAliveProducer neighbours;
 
     @Test
     void cellWithTwoNeighboursLivesOn() throws InterruptedException {

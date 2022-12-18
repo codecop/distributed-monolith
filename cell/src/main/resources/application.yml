@@ -16,7 +16,7 @@ micronaut:
 
 config.jms:
   tickQueue: tick-messages
-  neighbourQueue: alive-messages
+  aliveQueue: alive-messages
   
 netty:
   default:

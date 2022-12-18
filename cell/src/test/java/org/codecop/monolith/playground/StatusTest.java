@@ -8,11 +8,11 @@ class StatusTest {
 
     @Test
     void updateWithTwoNeighboursLivesOn() {
-        Status status = Status.ALIVE;
+        Life status = Life.ALIVE;
 
         status.withNeighbours(2);
 
-        assertEquals(Status.ALIVE, status);
+        assertEquals(Life.ALIVE, status);
     }
 
 }

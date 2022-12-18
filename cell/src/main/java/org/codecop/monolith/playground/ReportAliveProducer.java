@@ -7,9 +7,9 @@ import io.micronaut.jms.annotations.Queue;
 import io.micronaut.messaging.annotation.MessageBody;
 
 @JMSProducer(CONNECTION_FACTORY_BEAN_NAME)
-public interface NeighbourProducer {
+public interface ReportAliveProducer {
 
-    @Queue("${config.jms.neighbourQueue}")
-    void report(@MessageBody Position livingPosition);
+    @Queue("${config.jms.aliveQueue}")
+    void report(@MessageBody Position at);
 
 }

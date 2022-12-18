@@ -9,21 +9,20 @@ import jakarta.inject.Inject;
 
 @Controller
 @Produces(value = MediaType.APPLICATION_JSON)
-public class HttpController {
+public class StatusController {
 
     @Inject
-    private Position position;
+    private Life status;
     @Inject
-    private Status status;
+    private Position position;
+
+    @Get("/alive.json")
+    public HttpResponse<Life> alive() {
+        return HttpResponse.ok(status);
+    }
 
     @Get("/position.json")
     public HttpResponse<Position> position() {
         return HttpResponse.ok(position);
     }
-
-    @Get("/alive.json")
-    public HttpResponse<Status> alive() {
-        return HttpResponse.ok(status);
-    }
-
 }
