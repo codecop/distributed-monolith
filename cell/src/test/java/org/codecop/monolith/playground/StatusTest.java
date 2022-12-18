@@ -15,4 +15,13 @@ class StatusTest {
         assertEquals(Life.ALIVE, status);
     }
 
+    @Test
+    void updateWithThreeNeighboursIsBord() {
+        Life status = Life.DEAD;
+        
+        status.withNeighbours(3);
+        
+        assertEquals(Life.ALIVE, status);
+    }
+
 }
