@@ -22,7 +22,7 @@ public class Position {
     }
 
     public boolean isNext(Position other) {
-        return Math.abs(x - other.x) <= 1 && Math.abs(y - other.y) <= 1;
+        return Math.max(Math.abs(x - other.x), Math.abs(y - other.y)) == 1;
     }
 
     // for JSON mapper
