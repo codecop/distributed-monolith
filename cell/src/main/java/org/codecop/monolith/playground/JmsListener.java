@@ -6,29 +6,23 @@ import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Queue;
 import io.micronaut.messaging.annotation.MessageBody;
 import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 
-@Singleton
+/**
+ * Wrapper of the model as JMS receiver.
+ */
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
 public class JmsListener {
 
     @Inject
-    private Life status;
-    @Inject
-    private Position position;
-
-    private int countNeighbours;
+    private Model model;
 
     @Queue(value = "${config.jms.tickQueue}", concurrency = "1-5")
     public void onTick(@SuppressWarnings("unused") @MessageBody String unused) {
-        status.withNeighbours(countNeighbours);
-        countNeighbours = 0;
+        model.tick();
     }
 
     @Queue(value = "${config.jms.aliveQueue}", concurrency = "1-5")
     public void onLivingNeighbour(@MessageBody Position at) {
-        if (position.isNext(at)) {
-            countNeighbours++;
-        }
+        model.recordLivingNeighbour(at);
     }
 }

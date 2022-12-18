@@ -7,22 +7,23 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 import jakarta.inject.Inject;
 
+/**
+ * Wrapper of the model as JSON controller for test.
+ */
 @Controller
 @Produces(value = MediaType.APPLICATION_JSON)
 public class StatusController {
 
     @Inject
-    private Life status;
-    @Inject
-    private Position position;
+    private Model model;
 
     @Get("/alive.json")
-    public HttpResponse<Life> alive() {
-        return HttpResponse.ok(status);
+    public HttpResponse<Life> status() {
+        return HttpResponse.ok(model.getStatus());
     }
 
     @Get("/position.json")
     public HttpResponse<Position> position() {
-        return HttpResponse.ok(position);
+        return HttpResponse.ok(model.getPosition());
     }
 }
