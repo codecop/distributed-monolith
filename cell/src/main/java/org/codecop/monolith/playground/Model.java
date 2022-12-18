@@ -12,10 +12,14 @@ public class Model {
     private Position position;
 
     private int countNeighbours;
+    private int lastClock = -1;
 
-    public void tick() {
-        status.withNeighbours(countNeighbours);
-        countNeighbours = 0;
+    public void tick(int clock) {
+        if (clock > lastClock) {
+            lastClock = clock;
+            status.withNeighbours(countNeighbours);
+            countNeighbours = 0;
+        }
     }
 
     public void recordLivingNeighbour(Position at) {

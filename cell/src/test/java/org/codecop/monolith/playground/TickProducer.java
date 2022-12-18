@@ -10,6 +10,6 @@ import io.micronaut.messaging.annotation.MessageBody;
 public interface TickProducer {
 
     @Queue("${config.jms.tickQueue}")
-    void tick(@MessageBody String unused);
+    void tick(@MessageBody int clock);
 
 }

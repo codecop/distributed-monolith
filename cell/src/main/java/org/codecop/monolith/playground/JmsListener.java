@@ -17,8 +17,8 @@ public class JmsListener {
     private Model model;
 
     @Queue(value = "${config.jms.tickQueue}", concurrency = "1-5")
-    public void onTick(@SuppressWarnings("unused") @MessageBody String unused) {
-        model.tick();
+    public void onTick(@MessageBody int clock) {
+        model.tick(clock);
     }
 
     @Queue(value = "${config.jms.aliveQueue}", concurrency = "1-5")

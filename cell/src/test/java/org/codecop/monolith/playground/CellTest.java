@@ -20,6 +20,8 @@ class CellTest {
     @Inject
     Life status;
 
+    static int clock;
+
     @Test
     void cellHasPosition() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/position.json"));
@@ -45,10 +47,14 @@ class CellTest {
         status.setAlive(true);
         // assertAlive(true);
 
-        ticker.tick("");
-        waitForJms();
+        tick();
 
         assertAlive(false);
+    }
+
+    private void tick() throws InterruptedException {
+        ticker.tick(clock++);
+        waitForJms();
     }
 
     private void waitForJms() throws InterruptedException {
@@ -65,8 +71,7 @@ class CellTest {
         neighbours.report(new Position(1, 3));
         waitForJms();
 
-        ticker.tick("");
-        waitForJms();
+        tick();
 
         assertAlive(true);
     }
@@ -77,13 +82,11 @@ class CellTest {
         neighbours.report(new Position(3, 1));
         neighbours.report(new Position(3, 3));
         waitForJms();
-        
-        ticker.tick("");
-        waitForJms();
-        
+
+        tick();
+
         assertAlive(false);
     }
 
     // seed message
-    // cell is alive
 }
