@@ -2,8 +2,15 @@ package org.codecop.monolith.playground.jms;
 
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.codecop.monolith.playground.gol.Model;
 import org.codecop.monolith.playground.gol.Position;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
@@ -18,6 +25,8 @@ import jakarta.inject.Singleton;
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
 public class JmsListener {
 
+    private Logger logger = LoggerFactory.getLogger(JmsListener.class);
+
     @Inject
     private Model model;
     @Inject
@@ -26,6 +35,8 @@ public class JmsListener {
     private TickProducer ticker;
 
     private int currentClock = -1;
+
+    private final Map<Integer, List<Position>> futureNeighbours = new HashMap<>();
 
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
@@ -39,7 +50,26 @@ public class JmsListener {
 
     @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody ClockedPosition message) {
-        model.recordLivingNeighbour(fromDto(message));
+        if (currentClock > message.getClock()) {
+            logger.warn("Received LivingNeighbour with older clock {}, current {}, discarding: {}", //
+                    message.getClock(), currentClock, message);
+
+        } else if (currentClock == message.getClock()) {
+            model.recordLivingNeighbour(fromDto(message));
+
+        } else /* in future */ {
+            logger.info("Received LivingNeighbour with newer clock {}, current {}, storing: {}", //
+                    message.getClock(), currentClock, message);
+            storeForFuture(message);
+        }
+    }
+
+    private void storeForFuture(ClockedPosition message) {
+        int futureClock = message.getClock();
+        if (!futureNeighbours.containsKey(futureClock)) {
+            futureNeighbours.put(futureClock, new ArrayList<Position>());
+        }
+        futureNeighbours.get(futureClock).add(fromDto(message));
     }
 
     @Topic(value = "${config.jms.tickQueue}")
@@ -51,6 +81,7 @@ public class JmsListener {
 
             broadcastLife(clock);
         }
+        checkFuture();
     }
 
     private void broadcastLife(int clock) {
@@ -61,6 +92,13 @@ public class JmsListener {
 
     private ClockedPosition toDto(int clock, Position position) {
         return new ClockedPosition(clock, position.getX(), position.getY());
+    }
+
+    private void checkFuture() {
+        if (futureNeighbours.containsKey(currentClock)) {
+            futureNeighbours.get(currentClock).stream().forEach(p -> model.recordLivingNeighbour(p));
+            futureNeighbours.remove(currentClock);
+        }
     }
 
     public void triggerTick() {

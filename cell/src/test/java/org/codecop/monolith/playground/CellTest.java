@@ -67,7 +67,7 @@ class CellTest {
     @Test
     void triggerGlobalTick() throws InterruptedException {
         life.seed();
-        
+
         client.toBlocking().exchange(HttpRequest.POST("/tick", ""));
         waitForJms();
         clock++;
@@ -179,6 +179,28 @@ class CellTest {
         tick();
 
         assertNull(aliveQueueSpy.recorded);
+    }
+
+    @Test
+    void storeFutureNeighboursForNextTick() throws InterruptedException {
+        life.kill();
+        neighbours.report(positionRelative(-1, -1));
+        neighbours.report(positionRelative(-1, 0));
+        neighbours.report(futurePositionRelative(1, -1, 1));
+        neighbours.report(futurePositionRelative(1, -1, 0));
+        neighbours.report(positionRelative(-1, 1));
+        waitForJms();
+
+        tick();
+        assertTrue(life.isAlive()); // not goal of test
+        tick();
+
+        // still alive because two neighbours
+        assertTrue(life.isAlive());
+    }
+
+    private ClockedPosition futurePositionRelative(int dt, int dx, int dy) {
+        return new ClockedPosition(clock + dt, position.getX() + dx, position.getY() + dy);
     }
 
 }
