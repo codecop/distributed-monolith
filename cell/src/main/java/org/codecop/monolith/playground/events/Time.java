@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+/**
+ * Controlling the clock and time machine.
+ */
 @Singleton
 public class Time {
 
@@ -23,13 +26,13 @@ public class Time {
     @Inject
     private ClockedPositionConverter converter;
 
-    public int getCurrentClock() {
+    public int getCurrent() {
         return current;
     }
 
-    public void onLivingNeighbourInFuture(ClockedPosition message) {
-        logger.info("Received LivingNeighbour with newer clock {}, current {}, storing: {}", //
-                message.getClock(), getCurrentClock(), message);
+    public void storeLivingNeighbourForFuture(ClockedPosition message) {
+        logger.info("Received {} with newer clock {}, current {}, storing: {}", //
+                "LivingNeighbour", message.getClock(), current, message);
 
         int futureClock = message.getClock();
         Position position = converter.fromDto(message);
@@ -43,7 +46,7 @@ public class Time {
         futureNeighbours.get(futureClock).add(position);
     }
 
-    public void eachFuture(Consumer<Position> consumer) {
+    public void eachFutureLivingNeighbour(Consumer<Position> consumer) {
         if (futureNeighbours.containsKey(current)) {
             futureNeighbours.get(current).stream().forEach(consumer);
             futureNeighbours.remove(current);
@@ -55,35 +58,25 @@ public class Time {
     }
 
     public boolean isStale(ClockedPosition message) {
-        int clock = message.getClock();
-        return isStale(clock);
-    }
-
-    public boolean isStale(int clock) {
-        return getCurrentClock() > clock;
+        return message.getClock() < current;
     }
 
     public boolean isNow(ClockedPosition message) {
-        int clock = message.getClock();
-        return isNow(clock);
-    }
-
-    public boolean isNow(int clock) {
-        return getCurrentClock() == clock;
+        return message.getClock() == current;
     }
 
     public void reportStale(String kind, int clock) {
         logger.warn("Received {} with older clock {}, current {}, ignoring", //
-                kind, clock, getCurrentClock());
+                kind, clock, current);
     }
 
     public void reportStale(String kind, ClockedPosition message) {
         logger.warn("Received {} with older clock {}, current {}, discarding: {}", //
-                kind, message.getClock(), getCurrentClock(), message);
+                kind, message.getClock(), current, message);
     }
 
     public boolean isNewer(int clock) {
-        return getCurrentClock() < clock;
+        return clock > current;
     }
 
 }

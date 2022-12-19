@@ -3,6 +3,7 @@ package org.codecop.monolith.playground.events;
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
 import org.codecop.monolith.playground.gol.Cell;
+import org.codecop.monolith.playground.gol.Position;
 
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
@@ -11,7 +12,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 /**
- * Wrapper of the model as JMS receiver. Controlling the clock and time machine.
+ * Wrapper of the model as JMS receiver.
  */
 @Singleton
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
@@ -20,51 +21,60 @@ public class JmsListener {
     @Inject
     private Cell cell;
     @Inject
-    private ReportAliveProducer reportAlive;
-    @Inject
-    private TickProducer ticker;
-
-    @Inject
-    private Time now;
-
-    @Inject
     private ClockedPositionConverter converter;
+    @Inject
+    private Time time;
+
+    @Inject
+    private ReportAliveProducer reportAlive;
 
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        cell.seed(converter.fromDto(message));
-        broadcastLife(now.getCurrentClock());
+        seed(converter.fromDto(message));
+    }
+
+    private void seed(Position position) {
+        cell.seed(position);
+        broadcastLife();
+    }
+
+    public void seed() {
+        seed(cell.getPosition());
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody ClockedPosition message) {
-        if (now.isStale(message)) {
-            now.reportStale("LivingNeighbour", message);
+        if (time.isStale(message)) {
+            time.reportStale("LivingNeighbour", message);
 
-        } else if (now.isNow(message)) {
+        } else if (time.isNow(message)) {
             cell.recordLivingNeighbour(converter.fromDto(message));
 
         } else /* in future */ {
-            now.onLivingNeighbourInFuture(message);
+            time.storeLivingNeighbourForFuture(message);
         }
     }
 
     @Topic(value = "${config.jms.tickQueue}")
     public void onTick(@MessageBody int clock) {
-        if (!now.isNewer(clock)) {
-            now.reportStale("Tick", clock);
+        if (!time.isNewer(clock)) {
+            time.reportStale("Tick", clock);
             return;
         }
 
-        while (now.isNewer(clock)) {
-            now.nextTime();
+        while (time.isNewer(clock)) {
+            time.nextTime();
 
             cell.tick();
-
             broadcastLife(clock);
-            now.eachFuture(cell::recordLivingNeighbour);
+
+            time.eachFutureLivingNeighbour(cell::recordLivingNeighbour);
         }
+    }
+
+    private void broadcastLife() {
+        broadcastLife(time.getCurrent());
     }
 
     private void broadcastLife(int clock) {
@@ -73,12 +83,4 @@ public class JmsListener {
         }
     }
 
-    public void triggerTick() {
-        ticker.tick(now.getCurrentClock() + 1);
-    }
-
-    public void seed() {
-        cell.seed(cell.getPosition());
-        broadcastLife(now.getCurrentClock());
-    }
 }

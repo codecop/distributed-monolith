@@ -10,11 +10,13 @@ import jakarta.inject.Inject;
 public class TickController {
 
     @Inject
-    private JmsListener listener;
+    private Time time;
+    @Inject
+    private TickProducer ticker;
 
     @Post("/tick")
     public HttpResponse<?> triggerTick() {
-        listener.triggerTick();
+        ticker.tick(time.getCurrent() + 1);
         return HttpResponse.status(HttpStatus.CREATED);
     }
 }
