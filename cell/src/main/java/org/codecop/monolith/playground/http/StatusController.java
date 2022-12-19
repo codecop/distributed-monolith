@@ -5,9 +5,11 @@ import org.codecop.monolith.playground.gol.Model;
 import org.codecop.monolith.playground.gol.Position;
 
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Produces;
 import jakarta.inject.Inject;
 
@@ -39,4 +41,9 @@ public class StatusController {
         return new PositionResource(value.getX(), value.getY());
     }
 
+    @Post("/seed")
+    public HttpResponse<?> seed() {
+        model.seed();
+        return HttpResponse.status(HttpStatus.CREATED);
+    }
 }

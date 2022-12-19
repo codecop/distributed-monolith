@@ -15,6 +15,7 @@ import org.codecop.monolith.playground.jms.TickProducer;
 import org.junit.jupiter.api.Test;
 
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -51,6 +52,16 @@ class CellTest {
         life.kill();
         String response = client.toBlocking().retrieve(HttpRequest.GET("/alive.json"));
         assertEquals("{\"alive\":" + false + "}", response);
+    }
+
+    @Test
+    void seedThisCellHttp() {
+        life.kill();
+
+        HttpResponse<?> response = client.toBlocking().exchange(HttpRequest.POST("/seed", ""));
+
+        assertEquals(201, response.code());
+        assertTrue(life.isAlive());
     }
 
     // --- JMS ---
@@ -111,7 +122,7 @@ class CellTest {
     SeedProducer seeder;
 
     @Test
-    void seedThisCell() throws InterruptedException {
+    void seedThisCellJms() throws InterruptedException {
         life.kill();
 
         seeder.seed(positionRelative(0, 0));

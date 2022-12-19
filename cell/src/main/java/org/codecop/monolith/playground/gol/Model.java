@@ -15,7 +15,7 @@ public class Model {
 
     public void seed(Position at) {
         if (position.equals(at)) {
-            life.seed();
+            seed();
         }
     }
 
@@ -32,6 +32,10 @@ public class Model {
 
     public boolean isAlive() {
         return life.isAlive();
+    }
+
+    public void seed() {
+        life.seed();
     }
 
     public Life getLife() {
