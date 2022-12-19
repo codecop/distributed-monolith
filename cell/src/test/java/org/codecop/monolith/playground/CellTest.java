@@ -136,7 +136,8 @@ class CellTest {
         tick();
 
         assertAlive(true); // not goal of test
-        assertEquals(position, aliveQueueSpy.recorded.getPosition());
+        assertEquals(position.getX(), aliveQueueSpy.recorded.getX());
+        assertEquals(position.getY(), aliveQueueSpy.recorded.getY());
     }
 
     @Test

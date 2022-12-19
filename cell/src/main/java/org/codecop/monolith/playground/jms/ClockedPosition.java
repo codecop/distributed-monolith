@@ -1,9 +1,6 @@
 package org.codecop.monolith.playground.jms;
 
-import java.beans.Transient;
 import java.util.Objects;
-
-import org.codecop.monolith.playground.gol.Position;
 
 import io.micronaut.serde.annotation.Serdeable;
 
@@ -18,11 +15,6 @@ public class ClockedPosition {
         this.clock = clock;
         this.x = x;
         this.y = y;
-    }
-
-    @Transient
-    public Position getPosition() {
-        return new Position(x, y);
     }
 
     // for JSON mapper
@@ -73,6 +65,6 @@ public class ClockedPosition {
 
     @Override
     public String toString() {
-        return "[" + x + "," + y + "]";
+        return clock + " [" + x + "," + y + "]";
     }
 }

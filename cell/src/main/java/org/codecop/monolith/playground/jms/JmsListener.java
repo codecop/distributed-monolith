@@ -28,12 +28,12 @@ public class JmsListener {
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        model.seed(message.getPosition());
+        model.seed(new Position(message.getX(), message.getY()));
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody ClockedPosition message) {
-        model.recordLivingNeighbour(message.getPosition());
+        model.recordLivingNeighbour(new Position(message.getX(), message.getY()));
     }
 
     @Topic(value = "${config.jms.tickQueue}")

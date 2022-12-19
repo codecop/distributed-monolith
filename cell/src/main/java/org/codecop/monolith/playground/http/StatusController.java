@@ -26,16 +26,16 @@ public class StatusController {
         return HttpResponse.ok(toResource(model.getLife()));
     }
 
+    private LifeResource toResource(Life value) {
+        return new LifeResource(value.isAlive());
+    }
+
     @Get("/position.json")
     public HttpResponse<PositionResource> position() {
         return HttpResponse.ok(toResource(model.getPosition()));
     }
 
-    private static LifeResource toResource(Life value) {
-        return new LifeResource(value.isAlive());
-    }
-
-    private static PositionResource toResource(Position value) {
+    private PositionResource toResource(Position value) {
         return new PositionResource(value.getX(), value.getY());
     }
 
