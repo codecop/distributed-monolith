@@ -22,6 +22,8 @@ public class JmsListener {
     private Model model;
     @Inject
     private ReportAliveProducer reportAlive;
+    @Inject
+    private TickProducer ticker;
 
     private int currentClock = -1;
 
@@ -47,9 +49,13 @@ public class JmsListener {
 
             model.tick();
 
-            if (model.isAlive()) {
-                reportAlive.report(toDto(clock, model.getPosition()));
-            }
+            broadcastLife(clock);
+        }
+    }
+
+    private void broadcastLife(int clock) {
+        if (model.isAlive()) {
+            reportAlive.report(toDto(clock, model.getPosition()));
         }
     }
 
@@ -57,4 +63,7 @@ public class JmsListener {
         return new ClockedPosition(clock, position.getX(), position.getY());
     }
 
+    public void triggerTick() {
+        ticker.tick(currentClock + 1);
+    }
 }

@@ -64,6 +64,18 @@ class CellTest {
         assertTrue(life.isAlive());
     }
 
+    @Test
+    void triggerGlobalTick() throws InterruptedException {
+        life.seed();
+        
+        client.toBlocking().exchange(HttpRequest.POST("/tick", ""));
+        waitForJms();
+        clock++;
+
+        // lonely cell dies
+        assertFalse(life.isAlive());
+    }
+
     // --- JMS ---
 
     @Inject
