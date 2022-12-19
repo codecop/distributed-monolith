@@ -103,7 +103,7 @@ public class JmsListener {
 
     private void checkFuture() {
         if (futureNeighbours.containsKey(currentClock)) {
-            futureNeighbours.get(currentClock).stream().forEach(p -> model.recordLivingNeighbour(p));
+            futureNeighbours.get(currentClock).stream().forEach(model::recordLivingNeighbour);
             futureNeighbours.remove(currentClock);
         }
     }
