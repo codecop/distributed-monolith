@@ -9,10 +9,10 @@ import io.micronaut.messaging.annotation.MessageBody;
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
 public class AliveQueueSpy {
 
-    public PositionDto recorded;
+    public ClockedPosition recorded;
 
     @Topic(value = "${config.jms.aliveQueue}")
-    public void onLivingNeighbour(@MessageBody ClockedPosition at) {
-        this.recorded = at.getPosition();
+    public void onLivingNeighbour(@MessageBody ClockedPosition message) {
+        this.recorded = message;
     }
 }
