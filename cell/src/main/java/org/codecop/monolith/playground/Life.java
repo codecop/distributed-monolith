@@ -2,11 +2,9 @@ package org.codecop.monolith.playground;
 
 import java.util.Objects;
 
-import io.micronaut.serde.annotation.Serdeable;
 import jakarta.inject.Singleton;
 
 @Singleton
-@Serdeable
 public class Life {
 
     public static final Life ALIVE = new Life(true);
@@ -31,7 +29,6 @@ public class Life {
         this.alive = (this.alive && countNeighbours == 2) || countNeighbours == 3;
     }
 
-    // for JSON mapper
     public boolean isAlive() {
         return alive;
     }

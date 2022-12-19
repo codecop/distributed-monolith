@@ -18,7 +18,7 @@ public class StatusController {
     private Model model;
 
     @Get("/alive.json")
-    public HttpResponse<Life> status() {
+    public HttpResponse<LifeDto> status() {
         return HttpResponse.ok(model.getLife());
     }
 

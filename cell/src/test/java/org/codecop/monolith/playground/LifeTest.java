@@ -4,24 +4,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-class StatusTest {
+class LifeTest {
 
     @Test
     void updateWithTwoNeighboursLivesOn() {
-        Life status = Life.ALIVE;
+        Life life = Life.ALIVE;
 
-        status.withNeighbours(2);
+        life.withNeighbours(2);
 
-        assertEquals(Life.ALIVE, status);
+        assertEquals(Life.ALIVE, life);
     }
 
     @Test
     void updateWithThreeNeighboursIsBord() {
-        Life status = Life.DEAD;
-        
-        status.withNeighbours(3);
-        
-        assertEquals(Life.ALIVE, status);
+        Life life = Life.DEAD;
+
+        life.withNeighbours(3);
+
+        assertEquals(Life.ALIVE, life);
     }
 
 }

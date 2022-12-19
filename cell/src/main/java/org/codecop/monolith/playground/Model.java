@@ -34,9 +34,8 @@ public class Model {
         return life.isAlive();
     }
 
-    // TODO return DTO
-    public Life getLife() {
-        return life;
+    public LifeDto getLife() {
+        return new LifeDto(life.isAlive());
     }
 
     // TODO return DTO
