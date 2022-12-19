@@ -7,6 +7,8 @@ import org.codecop.monolith.playground.gol.Position;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
@@ -42,7 +44,8 @@ public class StatusController {
     }
 
     @Post("/seed")
-    public HttpResponse<?> seed() {
+    @Consumes(value = MediaType.ALL)
+    public HttpResponse<?> seed(@SuppressWarnings("unused") @Body String unused) {
         model.seed();
         return HttpResponse.status(HttpStatus.CREATED);
     }
