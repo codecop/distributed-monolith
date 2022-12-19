@@ -17,18 +17,14 @@ public class ViewController {
     @Get("/grid")
     public HttpResponse<String> grid() {
         char[] grid = ( //
-        "          \n" + //
-                "          \n" + //
-                "          \n" + //
-                "          \n" + //
-                "          \n" + //
-                "          \n" + //
-                "          \n" + //
-                "          \n" + //
-                "          \n" + //
-                "          \n" // 
+                ".....\n" + //
+                "     \n" + //
+                ".....\n" + //
+                "     \n" + //
+                ".....\n" // 
         ).toCharArray();
-        aliveListener.livingCells.forEach(p -> grid[p.getY() * (10 + 1) + p.getX()] = '#');
+        System.out.println(aliveListener.livingCells);
+        aliveListener.livingCells.forEach(p -> grid[p.getY() * (5 + 1) + p.getX()] = '#');
         return HttpResponse.ok(new String(grid));
     }
 
