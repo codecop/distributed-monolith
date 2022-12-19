@@ -1,7 +1,9 @@
 package org.codecop.monolith.playground;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.codecop.monolith.playground.gol.Life;
 import org.codecop.monolith.playground.gol.Position;
@@ -20,10 +22,9 @@ import jakarta.inject.Inject;
 
 @MicronautTest
 class CellTest {
-
-    @Inject
-    @Client("/")
-    HttpClient client;
+    /*
+     * Cannot split this test in JMS and HTTP. The JMS init does not work on second test.
+     */
 
     @Inject
     Life life;
@@ -33,6 +34,12 @@ class CellTest {
 
     static int clock;
 
+    // --- HTTP ---
+
+    @Inject
+    @Client("/")
+    HttpClient client;
+
     @Test
     void cellHasPosition() {
         String response = client.toBlocking().retrieve(HttpRequest.GET("/position.json"));
@@ -41,14 +48,12 @@ class CellTest {
 
     @Test
     void newCellIsDead() {
-        life.kill(); // not first test
-        assertAlive(false);
+        life.kill();
+        String response = client.toBlocking().retrieve(HttpRequest.GET("/alive.json"));
+        assertEquals("{\"alive\":" + false + "}", response);
     }
 
-    private void assertAlive(boolean state) {
-        String response = client.toBlocking().retrieve(HttpRequest.GET("/alive.json"));
-        assertEquals("{\"alive\":" + state + "}", response);
-    }
+    // --- JMS ---
 
     @Inject
     TickProducer ticker;
@@ -59,7 +64,7 @@ class CellTest {
 
         tick();
 
-        assertAlive(false);
+        assertFalse(life.isAlive());
     }
 
     private void tick() throws InterruptedException {
@@ -83,7 +88,7 @@ class CellTest {
 
         tick();
 
-        assertAlive(true);
+        assertTrue(life.isAlive());
     }
 
     private ClockedPosition positionRelative(int dx, int dy) {
@@ -99,7 +104,7 @@ class CellTest {
 
         tick();
 
-        assertAlive(false);
+        assertFalse(life.isAlive());
     }
 
     @Inject
@@ -112,7 +117,7 @@ class CellTest {
         seeder.seed(positionRelative(0, 0));
         waitForJms();
 
-        assertAlive(true);
+        assertTrue(life.isAlive());
     }
 
     @Test
@@ -122,7 +127,7 @@ class CellTest {
         seeder.seed(positionRelative(1, 1));
         waitForJms();
 
-        assertAlive(false);
+        assertFalse(life.isAlive());
     }
 
     @Inject
@@ -138,7 +143,7 @@ class CellTest {
 
         tick();
 
-        assertAlive(true); // not goal of test
+        assertTrue(life.isAlive()); // not goal of test
         assertEquals(position.getX(), aliveQueueSpy.recorded.getX());
         assertEquals(position.getY(), aliveQueueSpy.recorded.getY());
     }
