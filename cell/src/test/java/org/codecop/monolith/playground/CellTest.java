@@ -58,7 +58,7 @@ class CellTest {
     void seedThisCellHttp() {
         life.kill();
 
-        HttpResponse<?> response = client.toBlocking().exchange(HttpRequest.POST("/seed", "any"));
+        HttpResponse<?> response = client.toBlocking().exchange(HttpRequest.POST("/seed", ""));
 
         assertEquals(201, response.code());
         assertTrue(life.isAlive());
