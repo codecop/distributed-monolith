@@ -38,15 +38,14 @@ public class JmsListener {
 
     private final Map<Integer, List<Position>> futureNeighbours = new HashMap<>();
 
+    @Inject
+    ClockedPositionConverter converter;
+
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        cell.seed(fromDto(message));
+        cell.seed(converter.fromDto(message));
         broadcastLife(currentClock);
-    }
-
-    private Position fromDto(ClockedPosition message) {
-        return new Position(message.getX(), message.getY());
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
@@ -58,7 +57,7 @@ public class JmsListener {
         }
 
         if (currentClock == message.getClock()) {
-            cell.recordLivingNeighbour(fromDto(message));
+            cell.recordLivingNeighbour(converter.fromDto(message));
 
         } else /* in future */ {
             logger.info("Received LivingNeighbour with newer clock {}, current {}, storing: {}", //
@@ -72,7 +71,7 @@ public class JmsListener {
         if (!futureNeighbours.containsKey(futureClock)) {
             futureNeighbours.put(futureClock, new ArrayList<Position>());
         }
-        futureNeighbours.get(futureClock).add(fromDto(message));
+        futureNeighbours.get(futureClock).add(converter.fromDto(message));
     }
 
     @Topic(value = "${config.jms.tickQueue}")
@@ -94,12 +93,8 @@ public class JmsListener {
 
     private void broadcastLife(int clock) {
         if (cell.isAlive()) {
-            reportAlive.report(toDto(clock, cell.getPosition()));
+            reportAlive.report(converter.toDto(clock, cell.getPosition()));
         }
-    }
-
-    private ClockedPosition toDto(int clock, Position position) {
-        return new ClockedPosition(clock, position.getX(), position.getY());
     }
 
     private void checkFuture() {
