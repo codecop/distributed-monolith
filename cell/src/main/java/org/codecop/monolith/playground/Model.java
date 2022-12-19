@@ -12,7 +12,6 @@ public class Model {
     private Position position;
 
     private int countNeighbours;
-    private int lastClock = -1;
 
     public void seed(Position at) {
         if (position.equals(at)) {
@@ -26,22 +25,21 @@ public class Model {
         }
     }
 
-    public void tick(int clock) {
-        if (clock > lastClock) {
-            lastClock = clock;
-            life.withNeighbours(countNeighbours);
-            countNeighbours = 0;
-        }
+    public void tick() {
+        life.withNeighbours(countNeighbours);
+        countNeighbours = 0;
     }
 
     public boolean isAlive() {
         return life.isAlive();
     }
 
+    // TODO return DTO
     public Life getLife() {
         return life;
     }
 
+    // TODO return DTO
     public Position getPosition() {
         return position;
     }

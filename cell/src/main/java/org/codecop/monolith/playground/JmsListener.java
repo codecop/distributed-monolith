@@ -6,10 +6,12 @@ import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
 import io.micronaut.messaging.annotation.MessageBody;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * Wrapper of the model as JMS receiver.
  */
+@Singleton
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
 public class JmsListener {
 
@@ -18,21 +20,27 @@ public class JmsListener {
     @Inject
     private ReportAliveProducer reportAlive;
 
+    private int currentClock = -1;
+
     @Topic(value = "${config.jms.seedQueue}")
-    public void onSeed(@MessageBody ClockedPosition at) {
-        model.seed(at.getValue());
+    public void onSeed(@MessageBody ClockedPosition message) {
+        // seed ignores clock
+        model.seed(message.getPosition());
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
-    public void onLivingNeighbour(@MessageBody ClockedPosition at) {
-        model.recordLivingNeighbour(at.getValue());
+    public void onLivingNeighbour(@MessageBody ClockedPosition message) {
+        model.recordLivingNeighbour(message.getPosition());
     }
 
     @Topic(value = "${config.jms.tickQueue}")
     public void onTick(@MessageBody int clock) {
-        model.tick(clock);
-        if (model.isAlive()) {
-            reportAlive.report(new ClockedPosition(0, model.getPosition()));
+        if (currentClock < clock) {
+            currentClock = clock;
+            model.tick();
+            if (model.isAlive()) {
+                reportAlive.report(new ClockedPosition(clock, model.getPosition()));
+            }
         }
     }
 }
