@@ -19,20 +19,20 @@ public class JmsListener {
     private ReportAliveProducer reportAlive;
 
     @Topic(value = "${config.jms.seedQueue}")
-    public void onSeed(@MessageBody Position at) {
-        model.seed(at);
+    public void onSeed(@MessageBody ClockedPosition at) {
+        model.seed(at.getValue());
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
-    public void onLivingNeighbour(@MessageBody Position at) {
-        model.recordLivingNeighbour(at);
+    public void onLivingNeighbour(@MessageBody ClockedPosition at) {
+        model.recordLivingNeighbour(at.getValue());
     }
 
     @Topic(value = "${config.jms.tickQueue}")
     public void onTick(@MessageBody int clock) {
         model.tick(clock);
         if (model.isAlive()) {
-            reportAlive.report(model.getPosition());
+            reportAlive.report(new ClockedPosition(0, model.getPosition()));
         }
     }
 }

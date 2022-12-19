@@ -12,7 +12,7 @@ public class AliveQueueSpy {
     public Position recorded;
 
     @Topic(value = "${config.jms.aliveQueue}")
-    public void onLivingNeighbour(@MessageBody Position at) {
-        this.recorded = at;
+    public void onLivingNeighbour(@MessageBody ClockedPosition at) {
+        this.recorded = at.getValue();
     }
 }

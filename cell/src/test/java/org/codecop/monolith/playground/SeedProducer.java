@@ -10,6 +10,6 @@ import io.micronaut.messaging.annotation.MessageBody;
 public interface SeedProducer {
 
     @Topic("${config.jms.seedQueue}")
-    void seed(@MessageBody Position at);
+    void seed(@MessageBody ClockedPosition at);
 
 }

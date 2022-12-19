@@ -10,6 +10,6 @@ import io.micronaut.messaging.annotation.MessageBody;
 public interface ReportAliveProducer {
 
     @Topic("${config.jms.aliveQueue}")
-    void report(@MessageBody Position at);
+    void report(@MessageBody ClockedPosition at);
 
 }
