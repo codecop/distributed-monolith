@@ -76,7 +76,7 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
+                <configuration combine.self="override">
                     <mainClass>${exec.mainClass}</mainClass>
                 </configuration>
             </plugin>
