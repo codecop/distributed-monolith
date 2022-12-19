@@ -3,6 +3,8 @@ package org.codecop.monolith.playground;
 import java.beans.Transient;
 import java.util.Objects;
 
+import org.codecop.monolith.playground.gol.Position;
+
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable

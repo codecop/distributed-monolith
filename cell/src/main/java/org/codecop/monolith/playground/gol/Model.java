@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.gol;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

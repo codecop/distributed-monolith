@@ -1,17 +1,17 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.http;
 
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public class LifeDto {
+public class LifeResource {
 
     private boolean alive;
 
-    public LifeDto() {
+    public LifeResource() {
         this(false);
     }
 
-    public LifeDto(boolean alive) {
+    public LifeResource(boolean alive) {
         this.alive = alive;
     }
 

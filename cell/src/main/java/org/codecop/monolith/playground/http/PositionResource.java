@@ -1,19 +1,19 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.http;
 
 import java.util.Objects;
 
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public class PositionDto {
+public class PositionResource {
 
     private int x;
     private int y;
 
-    public PositionDto() {
+    public PositionResource() {
     }
 
-    public PositionDto(int x, int y) {
+    public PositionResource(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -39,10 +39,10 @@ public class PositionDto {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof PositionDto)) {
+        if (!(obj instanceof PositionResource)) {
             return false;
         }
-        PositionDto other = (PositionDto) obj;
+        PositionResource other = (PositionResource) obj;
         return x == other.x && y == other.y;
     }
 

@@ -2,6 +2,8 @@ package org.codecop.monolith.playground;
 
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
+import org.codecop.monolith.playground.gol.Model;
+
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
 import io.micronaut.messaging.annotation.MessageBody;

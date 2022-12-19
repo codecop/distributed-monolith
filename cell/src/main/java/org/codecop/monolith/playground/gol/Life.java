@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.gol;
 
 import java.util.Objects;
 
@@ -33,7 +33,7 @@ public class Life {
         return alive;
     }
 
-    /* only for tests */ void setAlive(boolean alive) {
+    /* only for tests */ public void setAlive(boolean alive) {
         this.alive = alive;
     }
 

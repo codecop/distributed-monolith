@@ -3,6 +3,8 @@ package org.codecop.monolith.playground;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import org.codecop.monolith.playground.gol.Life;
+import org.codecop.monolith.playground.gol.Position;
 import org.junit.jupiter.api.Test;
 
 import io.micronaut.http.HttpRequest;

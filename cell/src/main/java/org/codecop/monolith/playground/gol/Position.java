@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.gol;
 
 import java.util.Objects;
 
@@ -12,6 +12,7 @@ public class Position {
 
     // for JSON mapper
     public Position() {
+        this(0, 0);
     }
 
     public Position(int x, int y) {
