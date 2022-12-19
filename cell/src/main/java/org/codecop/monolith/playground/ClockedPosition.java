@@ -6,9 +6,9 @@ import io.micronaut.serde.annotation.Serdeable;
 public class ClockedPosition {
 
     private int clock;
-    private Position position;
+    private PositionDto position;
 
-    public ClockedPosition(int clock, Position position) {
+    public ClockedPosition(int clock, PositionDto position) {
         this.clock = clock;
         this.position = position;
     }
@@ -26,11 +26,11 @@ public class ClockedPosition {
         this.clock = clock;
     }
 
-    public Position getPosition() {
+    public PositionDto getPosition() {
         return position;
     }
 
-    public void setPosition(Position value) {
+    public void setPosition(PositionDto value) {
         this.position = value;
     }
 

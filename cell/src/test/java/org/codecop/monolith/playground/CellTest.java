@@ -71,8 +71,8 @@ class CellTest {
     @Test
     void cellWithTwoNeighboursLivesOn() throws InterruptedException {
         status.setAlive(true);
-        neighbours.report(new ClockedPosition(clock, new Position(position.getX(), position.getY() - 1)));
-        neighbours.report(new ClockedPosition(clock, new Position(position.getX(), position.getY() + 1)));
+        neighbours.report(new ClockedPosition(clock, new PositionDto(position.getX(), position.getY() - 1)));
+        neighbours.report(new ClockedPosition(clock, new PositionDto(position.getX(), position.getY() + 1)));
         waitForJms();
 
         tick();
@@ -83,8 +83,8 @@ class CellTest {
     @Test
     void cellWithTwoNeighboursOutsideDies() throws InterruptedException {
         status.setAlive(true);
-        neighbours.report(new ClockedPosition(clock, new Position(3, 1)));
-        neighbours.report(new ClockedPosition(clock, new Position(3, 3)));
+        neighbours.report(new ClockedPosition(clock, new PositionDto(3, 1)));
+        neighbours.report(new ClockedPosition(clock, new PositionDto(3, 3)));
         waitForJms();
 
         tick();
@@ -99,7 +99,7 @@ class CellTest {
     void seedThisCell() throws InterruptedException {
         status.setAlive(false);
 
-        seeder.seed(new ClockedPosition(clock, position));
+        seeder.seed(new ClockedPosition(clock, new PositionDto(position.getX(), position.getY())));
         waitForJms();
 
         assertAlive(true);
@@ -109,7 +109,7 @@ class CellTest {
     void seedDifferentCell() throws InterruptedException {
         status.setAlive(false);
 
-        seeder.seed(new ClockedPosition(clock, new Position(position.getX() + 1, position.getY() + 1)));
+        seeder.seed(new ClockedPosition(clock, new PositionDto(position.getX() + 1, position.getY() + 1)));
         waitForJms();
 
         assertAlive(false);
@@ -121,15 +121,15 @@ class CellTest {
     @Test
     void cellSendsLivingStateAfterTick() throws InterruptedException {
         status.setAlive(false);
-        neighbours.report(new ClockedPosition(clock, new Position(position.getX() - 1, position.getY() - 1)));
-        neighbours.report(new ClockedPosition(clock, new Position(position.getX() - 1, position.getY())));
-        neighbours.report(new ClockedPosition(clock, new Position(position.getX() - 1, position.getY() + 1)));
+        neighbours.report(new ClockedPosition(clock, new PositionDto(position.getX() - 1, position.getY() - 1)));
+        neighbours.report(new ClockedPosition(clock, new PositionDto(position.getX() - 1, position.getY())));
+        neighbours.report(new ClockedPosition(clock, new PositionDto(position.getX() - 1, position.getY() + 1)));
         waitForJms();
 
         tick();
 
         assertAlive(true); // not goal of test
-        assertEquals(position, aliveQueueSpy.recorded);
+        assertEquals(new PositionDto(position.getX(), position.getY()), aliveQueueSpy.recorded);
     }
 
     @Test

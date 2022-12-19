@@ -2,43 +2,34 @@ package org.codecop.monolith.playground;
 
 import java.util.Objects;
 
-import io.micronaut.context.annotation.ConfigurationProperties;
+import io.micronaut.serde.annotation.Serdeable;
 
-@ConfigurationProperties("position")
-public class Position {
+@Serdeable
+public class PositionDto {
 
     private int x;
     private int y;
 
-    // for JSON mapper
-    public Position() {
+    public PositionDto() {
     }
 
-    public Position(int x, int y) {
+    public PositionDto(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public boolean isNext(Position other) {
-        return Math.max(Math.abs(x - other.x), Math.abs(y - other.y)) == 1;
-    }
-
-    // for JSON mapper
     public int getX() {
         return x;
     }
 
-    // for JSON mapper
     public void setX(int x) {
         this.x = x;
     }
 
-    // for JSON mapper
     public int getY() {
         return y;
     }
 
-    // for JSON mapper
     public void setY(int y) {
         this.y = y;
     }
@@ -48,10 +39,10 @@ public class Position {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Position)) {
+        if (!(obj instanceof PositionDto)) {
             return false;
         }
-        Position other = (Position) obj;
+        PositionDto other = (PositionDto) obj;
         return x == other.x && y == other.y;
     }
 

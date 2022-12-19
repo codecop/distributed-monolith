@@ -19,11 +19,20 @@ public class StatusController {
 
     @Get("/alive.json")
     public HttpResponse<LifeDto> status() {
-        return HttpResponse.ok(model.getLife());
+        return HttpResponse.ok(toDto(model.getLife()));
     }
 
     @Get("/position.json")
-    public HttpResponse<Position> position() {
-        return HttpResponse.ok(model.getPosition());
+    public HttpResponse<PositionDto> position() {
+        return HttpResponse.ok(toDto(model.getPosition()));
     }
+
+    private static LifeDto toDto(Life value) {
+        return new LifeDto(value.isAlive());
+    }
+
+    private static PositionDto toDto(Position value) {
+        return new PositionDto(value.getX(), value.getY());
+    }
+
 }

@@ -34,11 +34,10 @@ public class Model {
         return life.isAlive();
     }
 
-    public LifeDto getLife() {
-        return new LifeDto(life.isAlive());
+    public Life getLife() {
+        return life;
     }
 
-    // TODO return DTO
     public Position getPosition() {
         return position;
     }
