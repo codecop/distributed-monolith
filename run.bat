@@ -26,6 +26,8 @@ start "Cell22" cmd.exe /C "java -Dmicronaut.server.port=8202 -Dposition.x=2 -Dpo
 cd ..
 
 @set VIEW=wget http://localhost:8000/grid && type grid && del grid
+@echo ready for first view?
+@pause
 %VIEW%
 
 call wget --method=post http://localhost:8100/seed && del seed
@@ -33,7 +35,9 @@ call wget --method=post http://localhost:8101/seed && del seed
 call wget --method=post http://localhost:8102/seed && del seed
 
 call wget --method=post http://localhost:8102/tick && del tick 
-pause
+
+@echo ready for first tick view?
+@pause
 %VIEW%
 
 @endlocal
