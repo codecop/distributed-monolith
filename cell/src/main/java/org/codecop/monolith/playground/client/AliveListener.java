@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.codecop.monolith.playground.gol.Position;
-import org.codecop.monolith.playground.jms.ClockedPosition;
+import org.codecop.monolith.playground.events.ClockedPosition;
 
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;

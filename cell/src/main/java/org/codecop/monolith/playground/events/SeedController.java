@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground.jms;
+package org.codecop.monolith.playground.events;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;

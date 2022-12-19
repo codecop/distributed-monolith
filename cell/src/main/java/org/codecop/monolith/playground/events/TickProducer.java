@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground.jms;
+package org.codecop.monolith.playground.events;
 
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
@@ -7,9 +7,9 @@ import io.micronaut.jms.annotations.Topic;
 import io.micronaut.messaging.annotation.MessageBody;
 
 @JMSProducer(CONNECTION_FACTORY_BEAN_NAME)
-public interface ReportAliveProducer {
+public interface TickProducer {
 
-    @Topic("${config.jms.aliveQueue}")
-    void report(@MessageBody ClockedPosition message);
+    @Topic("${config.jms.tickQueue}")
+    void tick(@MessageBody int clock);
 
 }

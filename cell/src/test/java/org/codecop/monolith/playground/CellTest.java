@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.codecop.monolith.playground.gol.Life;
 import org.codecop.monolith.playground.gol.Position;
-import org.codecop.monolith.playground.jms.AliveQueueSpy;
-import org.codecop.monolith.playground.jms.ClockedPosition;
-import org.codecop.monolith.playground.jms.ReportAliveProducer;
-import org.codecop.monolith.playground.jms.SeedProducer;
-import org.codecop.monolith.playground.jms.TickProducer;
+import org.codecop.monolith.playground.events.AliveQueueSpy;
+import org.codecop.monolith.playground.events.ClockedPosition;
+import org.codecop.monolith.playground.events.ReportAliveProducer;
+import org.codecop.monolith.playground.events.SeedProducer;
+import org.codecop.monolith.playground.events.TickProducer;
 import org.junit.jupiter.api.Test;
 
 import io.micronaut.http.HttpRequest;
