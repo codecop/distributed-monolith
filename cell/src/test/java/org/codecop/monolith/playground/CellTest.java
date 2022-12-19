@@ -26,7 +26,7 @@ class CellTest {
     HttpClient client;
 
     @Inject
-    Life status;
+    Life life;
 
     @Inject
     Position position;
@@ -41,7 +41,7 @@ class CellTest {
 
     @Test
     void newCellIsDead() {
-        status.setAlive(false); // not first test
+        life.kill(); // not first test
         assertAlive(false);
     }
 
@@ -55,8 +55,7 @@ class CellTest {
 
     @Test
     void cellDiesWithoutNeighbours() throws InterruptedException {
-        status.setAlive(true);
-        // assertAlive(true);
+        life.seed();
 
         tick();
 
@@ -64,7 +63,7 @@ class CellTest {
     }
 
     private void tick() throws InterruptedException {
-        ticker.tick(clock++);
+        ticker.tick(++clock);
         waitForJms();
     }
 
@@ -77,9 +76,9 @@ class CellTest {
 
     @Test
     void cellWithTwoNeighboursLivesOn() throws InterruptedException {
-        status.setAlive(true);
-        neighbours.report(new ClockedPosition(clock, position.getX(), position.getY() - 1));
-        neighbours.report(new ClockedPosition(clock, position.getX(), position.getY() + 1));
+        life.seed();
+        neighbours.report(positionRelative(0, -1));
+        neighbours.report(positionRelative(0, 1));
         waitForJms();
 
         tick();
@@ -87,11 +86,15 @@ class CellTest {
         assertAlive(true);
     }
 
+    private ClockedPosition positionRelative(int dx, int dy) {
+        return new ClockedPosition(clock, position.getX() + dx, position.getY() + dy);
+    }
+
     @Test
     void cellWithTwoNeighboursOutsideDies() throws InterruptedException {
-        status.setAlive(true);
-        neighbours.report(new ClockedPosition(clock, 3, 1));
-        neighbours.report(new ClockedPosition(clock, 3, 3));
+        life.seed();
+        neighbours.report(positionRelative(2, -1));
+        neighbours.report(positionRelative(2, +1));
         waitForJms();
 
         tick();
@@ -104,9 +107,9 @@ class CellTest {
 
     @Test
     void seedThisCell() throws InterruptedException {
-        status.setAlive(false);
+        life.kill();
 
-        seeder.seed(new ClockedPosition(clock, position.getX(), position.getY()));
+        seeder.seed(positionRelative(0, 0));
         waitForJms();
 
         assertAlive(true);
@@ -114,9 +117,9 @@ class CellTest {
 
     @Test
     void seedDifferentCell() throws InterruptedException {
-        status.setAlive(false);
+        life.kill();
 
-        seeder.seed(new ClockedPosition(clock, position.getX() + 1, position.getY() + 1));
+        seeder.seed(positionRelative(1, 1));
         waitForJms();
 
         assertAlive(false);
@@ -127,10 +130,10 @@ class CellTest {
 
     @Test
     void cellSendsLivingStateAfterTick() throws InterruptedException {
-        status.setAlive(false);
-        neighbours.report(new ClockedPosition(clock, position.getX() - 1, position.getY() - 1));
-        neighbours.report(new ClockedPosition(clock, position.getX() - 1, position.getY()));
-        neighbours.report(new ClockedPosition(clock, position.getX() - 1, position.getY() + 1));
+        life.kill();
+        neighbours.report(positionRelative(-1, -1));
+        neighbours.report(positionRelative(-1, 0));
+        neighbours.report(positionRelative(-1, 1));
         waitForJms();
 
         tick();
@@ -142,7 +145,7 @@ class CellTest {
 
     @Test
     void deadCellSendsNothingAfterTick() throws InterruptedException {
-        status.setAlive(false);
+        life.kill();
         aliveQueueSpy.recorded = null;
 
         tick();

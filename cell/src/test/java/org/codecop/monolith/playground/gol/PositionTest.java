@@ -3,7 +3,6 @@ package org.codecop.monolith.playground.gol;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.codecop.monolith.playground.gol.Position;
 import org.junit.jupiter.api.Test;
 
 class PositionTest {

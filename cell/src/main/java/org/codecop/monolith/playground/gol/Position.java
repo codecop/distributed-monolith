@@ -10,7 +10,7 @@ public class Position {
     private int x;
     private int y;
 
-    // for JSON mapper
+    // for config mapper
     public Position() {
         this(0, 0);
     }
@@ -24,31 +24,26 @@ public class Position {
         return Math.max(Math.abs(x - other.x), Math.abs(y - other.y)) == 1;
     }
 
-    // for JSON mapper
     public int getX() {
         return x;
     }
 
-    // for JSON mapper
+    // for config mapper
     public void setX(int x) {
         this.x = x;
     }
 
-    // for JSON mapper
     public int getY() {
         return y;
     }
 
-    // for JSON mapper
+    // for config mapper
     public void setY(int y) {
         this.y = y;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
         if (!(obj instanceof Position)) {
             return false;
         }

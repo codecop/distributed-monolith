@@ -28,24 +28,33 @@ public class JmsListener {
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        model.seed(new Position(message.getX(), message.getY()));
+        model.seed(fromDto(message));
+    }
+
+    private Position fromDto(ClockedPosition message) {
+        return new Position(message.getX(), message.getY());
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody ClockedPosition message) {
-        model.recordLivingNeighbour(new Position(message.getX(), message.getY()));
+        model.recordLivingNeighbour(fromDto(message));
     }
 
     @Topic(value = "${config.jms.tickQueue}")
     public void onTick(@MessageBody int clock) {
         if (currentClock < clock) {
             currentClock = clock;
+
             model.tick();
+
             if (model.isAlive()) {
-                Position position = model.getPosition();
-                reportAlive.report(new ClockedPosition(clock, position.getX(), position.getY()));
+                reportAlive.report(toDto(clock, model.getPosition()));
             }
         }
+    }
+
+    private ClockedPosition toDto(int clock, Position position) {
+        return new ClockedPosition(clock, position.getX(), position.getY());
     }
 
 }

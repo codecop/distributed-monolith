@@ -2,7 +2,6 @@ package org.codecop.monolith.playground.gol;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.codecop.monolith.playground.gol.Life;
 import org.junit.jupiter.api.Test;
 
 class LifeTest {

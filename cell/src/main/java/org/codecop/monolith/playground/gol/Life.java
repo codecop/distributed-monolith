@@ -25,6 +25,10 @@ public class Life {
         this.alive = true;
     }
 
+    public void kill() {
+        this.alive = false;
+    }
+
     public void withNeighbours(int countNeighbours) {
         this.alive = (this.alive && countNeighbours == 2) || countNeighbours == 3;
     }
@@ -33,11 +37,6 @@ public class Life {
         return alive;
     }
 
-    /* only for tests */ public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-    // only for tests
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Life)) {

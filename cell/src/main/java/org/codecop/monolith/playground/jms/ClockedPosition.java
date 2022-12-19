@@ -8,6 +8,7 @@ import io.micronaut.serde.annotation.Serdeable;
 public class ClockedPosition {
 
     private int clock;
+
     private int x;
     private int y;
 
@@ -16,8 +17,6 @@ public class ClockedPosition {
         this.x = x;
         this.y = y;
     }
-
-    // for JSON mapper
 
     public ClockedPosition() {
     }
