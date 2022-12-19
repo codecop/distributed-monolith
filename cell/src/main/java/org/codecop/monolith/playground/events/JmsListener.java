@@ -3,7 +3,6 @@ package org.codecop.monolith.playground.events;
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
 import org.codecop.monolith.playground.gol.Cell;
-import org.codecop.monolith.playground.gol.Position;
 
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
@@ -31,16 +30,8 @@ public class JmsListener {
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        seed(converter.fromDto(message));
-    }
-
-    private void seed(Position position) {
-        cell.seed(position);
+        cell.seed(converter.fromDto(message));
         broadcastLife();
-    }
-
-    public void seed() {
-        seed(cell.getPosition());
     }
 
     @Topic(value = "${config.jms.aliveQueue}")

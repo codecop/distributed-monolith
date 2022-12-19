@@ -54,13 +54,16 @@ class CellTest {
         assertEquals("{\"alive\":" + false + "}", response);
     }
 
+    // --- JMS via HTTP ---
+    
     @Test
-    void seedThisCellHttp() {
+    void seedThisCellHttp() throws InterruptedException {
         life.kill();
 
         HttpResponse<?> response = client.toBlocking().exchange(HttpRequest.POST("/seed", ""));
-
         assertEquals(201, response.code());
+        waitForJms();
+
         assertTrue(life.isAlive());
     }
 

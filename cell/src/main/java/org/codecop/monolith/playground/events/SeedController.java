@@ -1,5 +1,7 @@
 package org.codecop.monolith.playground.events;
 
+import org.codecop.monolith.playground.gol.Cell;
+
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -12,12 +14,16 @@ import jakarta.inject.Inject;
 public class SeedController {
 
     @Inject
-    private JmsListener listener;
+    private Cell cell;
+    @Inject
+    private ClockedPositionConverter converter;
+    @Inject
+    private SeedProducer seeder;
 
     @Post("/seed")
     @Consumes(value = MediaType.ALL)
     public HttpResponse<?> seed() {
-        listener.seed();
+        seeder.seed(converter.toDto(0, cell.getPosition()));
         return HttpResponse.status(HttpStatus.CREATED);
     }
 }
