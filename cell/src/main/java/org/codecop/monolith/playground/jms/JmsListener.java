@@ -19,7 +19,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 /**
- * Wrapper of the model as JMS receiver.
+ * Wrapper of the model as JMS receiver. Controlling the clock and time machine.
  */
 @Singleton
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
@@ -53,8 +53,10 @@ public class JmsListener {
         if (currentClock > message.getClock()) {
             logger.warn("Received LivingNeighbour with older clock {}, current {}, discarding: {}", //
                     message.getClock(), currentClock, message);
+            return;
+        }
 
-        } else if (currentClock == message.getClock()) {
+        if (currentClock == message.getClock()) {
             model.recordLivingNeighbour(fromDto(message));
 
         } else /* in future */ {
@@ -74,14 +76,19 @@ public class JmsListener {
 
     @Topic(value = "${config.jms.tickQueue}")
     public void onTick(@MessageBody int clock) {
-        if (currentClock < clock) {
-            currentClock = clock;
+        if (currentClock >= clock) {
+            logger.warn("Received Tick with older clock {}, current {}, ignoring", clock, currentClock);
+            return;
+        }
+
+        while (currentClock < clock) {
+            currentClock++;
 
             model.tick();
 
             broadcastLife(clock);
+            checkFuture();
         }
-        checkFuture();
     }
 
     private void broadcastLife(int clock) {
