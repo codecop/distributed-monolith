@@ -42,6 +42,7 @@ public class JmsListener {
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
         model.seed(fromDto(message));
+        broadcastLife(currentClock);
     }
 
     private Position fromDto(ClockedPosition message) {
