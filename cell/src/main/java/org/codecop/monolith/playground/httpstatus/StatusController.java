@@ -1,7 +1,7 @@
-package org.codecop.monolith.playground.http;
+package org.codecop.monolith.playground.httpstatus;
 
 import org.codecop.monolith.playground.gol.Life;
-import org.codecop.monolith.playground.gol.Model;
+import org.codecop.monolith.playground.gol.Cell;
 import org.codecop.monolith.playground.gol.Position;
 
 import io.micronaut.http.HttpResponse;
@@ -19,11 +19,11 @@ import jakarta.inject.Inject;
 public class StatusController {
 
     @Inject
-    private Model model;
+    private Cell cell;
 
     @Get("/alive.json")
     public HttpResponse<LifeResource> status() {
-        return HttpResponse.ok(toResource(model.getLife()));
+        return HttpResponse.ok(toResource(cell.getLife()));
     }
 
     private LifeResource toResource(Life value) {
@@ -32,7 +32,7 @@ public class StatusController {
 
     @Get("/position.json")
     public HttpResponse<PositionResource> position() {
-        return HttpResponse.ok(toResource(model.getPosition()));
+        return HttpResponse.ok(toResource(cell.getPosition()));
     }
 
     private PositionResource toResource(Position value) {

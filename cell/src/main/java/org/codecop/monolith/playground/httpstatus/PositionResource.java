@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground.http;
+package org.codecop.monolith.playground.httpstatus;
 
 import io.micronaut.serde.annotation.Serdeable;
 

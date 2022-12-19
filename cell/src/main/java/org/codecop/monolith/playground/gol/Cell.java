@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Model {
+public class Cell {
 
     @Inject
     private Life life;
@@ -15,7 +15,7 @@ public class Model {
 
     public void seed(Position at) {
         if (position.equals(at)) {
-            seed();
+            life.seed();
         }
     }
 
@@ -32,10 +32,6 @@ public class Model {
 
     public boolean isAlive() {
         return life.isAlive();
-    }
-
-    public void seed() {
-        life.seed();
     }
 
     public Life getLife() {

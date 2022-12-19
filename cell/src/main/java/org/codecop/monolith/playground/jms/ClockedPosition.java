@@ -64,6 +64,6 @@ public class ClockedPosition {
 
     @Override
     public String toString() {
-        return clock + " [" + x + "," + y + "]";
+        return clock + "' [" + x + "," + y + "]";
     }
 }

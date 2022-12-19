@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.codecop.monolith.playground.gol.Model;
+import org.codecop.monolith.playground.gol.Cell;
 import org.codecop.monolith.playground.gol.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class JmsListener {
     private Logger logger = LoggerFactory.getLogger(JmsListener.class);
 
     @Inject
-    private Model model;
+    private Cell cell;
     @Inject
     private ReportAliveProducer reportAlive;
     @Inject
@@ -41,7 +41,7 @@ public class JmsListener {
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        model.seed(fromDto(message));
+        cell.seed(fromDto(message));
         broadcastLife(currentClock);
     }
 
@@ -58,7 +58,7 @@ public class JmsListener {
         }
 
         if (currentClock == message.getClock()) {
-            model.recordLivingNeighbour(fromDto(message));
+            cell.recordLivingNeighbour(fromDto(message));
 
         } else /* in future */ {
             logger.info("Received LivingNeighbour with newer clock {}, current {}, storing: {}", //
@@ -85,7 +85,7 @@ public class JmsListener {
         while (currentClock < clock) {
             currentClock++;
 
-            model.tick();
+            cell.tick();
 
             broadcastLife(clock);
             checkFuture();
@@ -93,8 +93,8 @@ public class JmsListener {
     }
 
     private void broadcastLife(int clock) {
-        if (model.isAlive()) {
-            reportAlive.report(toDto(clock, model.getPosition()));
+        if (cell.isAlive()) {
+            reportAlive.report(toDto(clock, cell.getPosition()));
         }
     }
 
@@ -104,7 +104,7 @@ public class JmsListener {
 
     private void checkFuture() {
         if (futureNeighbours.containsKey(currentClock)) {
-            futureNeighbours.get(currentClock).stream().forEach(model::recordLivingNeighbour);
+            futureNeighbours.get(currentClock).stream().forEach(cell::recordLivingNeighbour);
             futureNeighbours.remove(currentClock);
         }
     }
@@ -114,7 +114,7 @@ public class JmsListener {
     }
 
     public void seed() {
-        model.seed();
+        cell.seed(cell.getPosition());
         broadcastLife(currentClock);
     }
 }

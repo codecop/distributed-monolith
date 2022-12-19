@@ -1,6 +1,6 @@
 package org.codecop.monolith.playground.gol;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,20 +8,30 @@ class LifeTest {
 
     @Test
     void updateWithTwoNeighboursLivesOn() {
-        Life life = Life.ALIVE;
+        Life life = givenAlive();
 
         life.withNeighbours(2);
 
-        assertEquals(Life.ALIVE, life);
+        assertTrue(life.isAlive());
+    }
+
+    private Life givenAlive() {
+        Life life = new Life();
+        life.seed();
+        return life;
     }
 
     @Test
     void updateWithThreeNeighboursIsBord() {
-        Life life = Life.DEAD;
+        Life life = givenDead();
 
         life.withNeighbours(3);
 
-        assertEquals(Life.ALIVE, life);
+        assertTrue(life.isAlive());
+    }
+
+    private Life givenDead() {
+        return new Life();
     }
 
 }
