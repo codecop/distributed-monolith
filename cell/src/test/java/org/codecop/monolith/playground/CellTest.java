@@ -1,6 +1,7 @@
 package org.codecop.monolith.playground;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -112,6 +113,33 @@ class CellTest {
         waitForJms();
 
         assertAlive(false);
+    }
+
+    @Inject
+    AliveQueueSpy aliveQueueSpy;
+
+    @Test
+    void cellSendsLivingStateAfterTick() throws InterruptedException {
+        status.setAlive(false);
+        neighbours.report(new Position(position.getX() - 1, position.getY() - 1));
+        neighbours.report(new Position(position.getX() - 1, position.getY()));
+        neighbours.report(new Position(position.getX() - 1, position.getY() + 1));
+        waitForJms();
+
+        tick();
+
+        assertAlive(true); // not goal of test
+        assertEquals(position, aliveQueueSpy.recorded);
+    }
+
+    @Test
+    void deadCellSendsNothingAfterTick() throws InterruptedException {
+        status.setAlive(false);
+        aliveQueueSpy.recorded = null;
+
+        tick();
+
+        assertNull(aliveQueueSpy.recorded);
     }
 
 }

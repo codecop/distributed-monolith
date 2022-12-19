@@ -3,7 +3,7 @@ package org.codecop.monolith.playground;
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
 import io.micronaut.jms.annotations.JMSListener;
-import io.micronaut.jms.annotations.Queue;
+import io.micronaut.jms.annotations.Topic;
 import io.micronaut.messaging.annotation.MessageBody;
 import jakarta.inject.Inject;
 
@@ -15,19 +15,24 @@ public class JmsListener {
 
     @Inject
     private Model model;
+    @Inject
+    private ReportAliveProducer reportAlive;
 
-    @Queue(value = "${config.jms.seedQueue}", concurrency = "1-5")
+    @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody Position at) {
         model.seed(at);
     }
 
-    @Queue(value = "${config.jms.aliveQueue}", concurrency = "1-5")
+    @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody Position at) {
         model.recordLivingNeighbour(at);
     }
 
-    @Queue(value = "${config.jms.tickQueue}", concurrency = "1-5")
+    @Topic(value = "${config.jms.tickQueue}")
     public void onTick(@MessageBody int clock) {
         model.tick(clock);
+        if (model.isAlive()) {
+            reportAlive.report(model.getPosition());
+        }
     }
 }
