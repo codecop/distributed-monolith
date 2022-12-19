@@ -5,6 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.codecop.monolith.playground.gol.Life;
 import org.codecop.monolith.playground.gol.Position;
+import org.codecop.monolith.playground.jms.AliveQueueSpy;
+import org.codecop.monolith.playground.jms.ClockedPosition;
+import org.codecop.monolith.playground.jms.ReportAliveProducer;
+import org.codecop.monolith.playground.jms.SeedProducer;
+import org.codecop.monolith.playground.jms.TickProducer;
 import org.junit.jupiter.api.Test;
 
 import io.micronaut.http.HttpRequest;
@@ -131,7 +136,7 @@ class CellTest {
         tick();
 
         assertAlive(true); // not goal of test
-        assertEquals(position, aliveQueueSpy.recorded.fromDto());
+        assertEquals(position, aliveQueueSpy.recorded.getPosition());
     }
 
     @Test

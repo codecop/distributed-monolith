@@ -1,8 +1,9 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.jms;
 
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
 import org.codecop.monolith.playground.gol.Model;
+import org.codecop.monolith.playground.gol.Position;
 
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
@@ -27,12 +28,12 @@ public class JmsListener {
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        model.seed(message.fromDto());
+        model.seed(message.getPosition());
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody ClockedPosition message) {
-        model.recordLivingNeighbour(message.fromDto());
+        model.recordLivingNeighbour(message.getPosition());
     }
 
     @Topic(value = "${config.jms.tickQueue}")
@@ -41,7 +42,8 @@ public class JmsListener {
             currentClock = clock;
             model.tick();
             if (model.isAlive()) {
-                reportAlive.report(new ClockedPosition(clock, model.getPosition().getX(), model.getPosition().getY()));
+                Position position = model.getPosition();
+                reportAlive.report(new ClockedPosition(clock, position.getX(), position.getY()));
             }
         }
     }

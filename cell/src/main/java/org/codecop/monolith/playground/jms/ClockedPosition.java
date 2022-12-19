@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.jms;
 
 import java.beans.Transient;
 import java.util.Objects;
@@ -21,7 +21,7 @@ public class ClockedPosition {
     }
 
     @Transient
-    public Position fromDto() {
+    public Position getPosition() {
         return new Position(x, y);
     }
 
