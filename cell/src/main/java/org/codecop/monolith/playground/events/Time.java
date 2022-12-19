@@ -54,8 +54,36 @@ public class Time {
         current++;
     }
 
-    public boolean isOld(ClockedPosition message) {
-        return getCurrentClock() > message.getClock();
+    public boolean isStale(ClockedPosition message) {
+        int clock = message.getClock();
+        return isStale(clock);
+    }
+
+    public boolean isStale(int clock) {
+        return getCurrentClock() > clock;
+    }
+
+    public boolean isNow(ClockedPosition message) {
+        int clock = message.getClock();
+        return isNow(clock);
+    }
+
+    public boolean isNow(int clock) {
+        return getCurrentClock() == clock;
+    }
+
+    public void reportStale(String kind, int clock) {
+        logger.warn("Received {} with older clock {}, current {}, ignoring", //
+                kind, clock, getCurrentClock());
+    }
+
+    public void reportStale(String kind, ClockedPosition message) {
+        logger.warn("Received {} with older clock {}, current {}, discarding: {}", //
+                kind, message.getClock(), getCurrentClock(), message);
+    }
+
+    public boolean isNewer(int clock) {
+        return getCurrentClock() < clock;
     }
 
 }

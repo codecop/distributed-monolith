@@ -3,9 +3,6 @@ package org.codecop.monolith.playground.events;
 import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration.CONNECTION_FACTORY_BEAN_NAME;
 
 import org.codecop.monolith.playground.gol.Cell;
-import org.codecop.monolith.playground.gol.Position;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
@@ -20,8 +17,6 @@ import jakarta.inject.Singleton;
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
 public class JmsListener {
 
-    private Logger logger = LoggerFactory.getLogger(JmsListener.class);
-
     @Inject
     private Cell cell;
     @Inject
@@ -33,7 +28,7 @@ public class JmsListener {
     private Time now;
 
     @Inject
-    ClockedPositionConverter converter;
+    private ClockedPositionConverter converter;
 
     @Topic(value = "${config.jms.seedQueue}")
     public void onSeed(@MessageBody ClockedPosition message) {
@@ -44,13 +39,10 @@ public class JmsListener {
 
     @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody ClockedPosition message) {
-        if (now.isOld(message)) {
-            logger.warn("Received LivingNeighbour with older clock {}, current {}, discarding: {}", //
-                    message.getClock(), now.getCurrentClock(), message);
-            return;
-        }
+        if (now.isStale(message)) {
+            now.reportStale("LivingNeighbour", message);
 
-        if (now.getCurrentClock() == message.getClock()) {
+        } else if (now.isNow(message)) {
             cell.recordLivingNeighbour(converter.fromDto(message));
 
         } else /* in future */ {
@@ -60,12 +52,12 @@ public class JmsListener {
 
     @Topic(value = "${config.jms.tickQueue}")
     public void onTick(@MessageBody int clock) {
-        if (now.getCurrentClock() >= clock) {
-            logger.warn("Received Tick with older clock {}, current {}, ignoring", clock, now.getCurrentClock());
+        if (!now.isNewer(clock)) {
+            now.reportStale("Tick", clock);
             return;
         }
 
-        while (now.getCurrentClock() < clock) {
+        while (now.isNewer(clock)) {
             now.nextTime();
 
             cell.tick();
