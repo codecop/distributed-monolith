@@ -23,7 +23,6 @@ public class ViewController {
                 "     \n" + //
                 ".....\n" // 
         ).toCharArray();
-        System.out.println(aliveListener.livingCells);
         aliveListener.livingCells.forEach(p -> grid[p.getY() * (5 + 1) + p.getX()] = '#');
         return HttpResponse.ok(new String(grid));
     }
