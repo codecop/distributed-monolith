@@ -25,19 +25,23 @@ start "Cell12" cmd.exe /C "java -Dmicronaut.server.port=8201 -Dposition.x=1 -Dpo
 start "Cell22" cmd.exe /C "java -Dmicronaut.server.port=8202 -Dposition.x=2 -Dposition.y=2 -jar target\distributed-gol-cell-0.1.jar"
 cd ..
 
-@set VIEW=wget http://localhost:8000/grid && type grid && del grid
-@echo ready for first view?
-@pause
-%VIEW%
-
 call wget --method=post http://localhost:8100/seed && del seed
 call wget --method=post http://localhost:8101/seed && del seed
 call wget --method=post http://localhost:8102/seed && del seed
+@echo ready to view SEED?
+@pause
+wget http://localhost:8000/grid && type grid && del grid
+
 
 call wget --method=post http://localhost:8102/tick && del tick 
-
-@echo ready for first tick view?
+@echo ready to view first TICK?
 @pause
-%VIEW%
+wget http://localhost:8000/grid && type grid && del grid
+
+
+call wget --method=post http://localhost:8102/tick && del tick 
+@echo ready to view next TICK?
+@pause
+wget http://localhost:8000/grid && type grid && del grid
 
 @endlocal
