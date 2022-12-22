@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import nl.jqno.equalsverifier.ConfiguredEqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+
 class PositionTest {
 
     @Test
@@ -39,4 +42,11 @@ class PositionTest {
         assertFalse(position.isNext(new Position(2 + 2, 3 + 1)));
     }
 
+    @Test
+    void equalsContract() {
+        new ConfiguredEqualsVerifier(). //
+                suppress(Warning.NONFINAL_FIELDS). //
+                forClass(Position.class). //
+                verify();
+    }
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public class ClockedPosition {
+public final class ClockedPosition {
 
     private int clock;
 
@@ -54,12 +54,12 @@ public class ClockedPosition {
             return false;
         }
         ClockedPosition other = (ClockedPosition) obj;
-        return x == other.x && y == other.y;
+        return clock == other.clock && x == other.x && y == other.y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(clock, x, y);
     }
 
     @Override

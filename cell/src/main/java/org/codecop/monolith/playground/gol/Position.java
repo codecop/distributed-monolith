@@ -5,7 +5,7 @@ import java.util.Objects;
 import io.micronaut.context.annotation.ConfigurationProperties;
 
 @ConfigurationProperties("position")
-public class Position {
+public final class Position {
 
     private int x;
     private int y;
