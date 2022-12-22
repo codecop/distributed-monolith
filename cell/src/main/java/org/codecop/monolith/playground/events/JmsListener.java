@@ -23,6 +23,8 @@ public class JmsListener {
     private ClockedPositionConverter converter;
     @Inject
     private Time time;
+    // @Inject
+    // private TaskScheduler taskScheduler;
 
     @Inject
     private ReportAliveProducer reportAlive;
@@ -58,9 +60,11 @@ public class JmsListener {
             time.nextTime();
 
             cell.tick();
-            broadcastLife(clock);
 
+            // Thread.sleep(1000);
+            broadcastLife(clock);
             time.eachFutureLivingNeighbour(cell::recordLivingNeighbour);
+            // taskScheduler.schedule(Duration.ofSeconds(1), () -> {
         }
     }
 
