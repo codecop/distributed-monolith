@@ -5,17 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.codecop.monolith.playground.gol.Life;
-import org.codecop.monolith.playground.gol.Position;
 import org.codecop.monolith.playground.events.AliveQueueSpy;
 import org.codecop.monolith.playground.events.ClockedPosition;
 import org.codecop.monolith.playground.events.ReportAliveProducer;
 import org.codecop.monolith.playground.events.SeedProducer;
 import org.codecop.monolith.playground.events.TickProducer;
+import org.codecop.monolith.playground.gol.Life;
+import org.codecop.monolith.playground.gol.Position;
 import org.junit.jupiter.api.Test;
 
 import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -52,31 +51,6 @@ class CellTest {
         life.kill();
         String response = client.toBlocking().retrieve(HttpRequest.GET("/alive.json"));
         assertEquals("{\"alive\":" + false + "}", response);
-    }
-
-    // --- JMS via HTTP ---
-    
-    @Test
-    void seedThisCellHttp() throws InterruptedException {
-        life.kill();
-
-        HttpResponse<?> response = client.toBlocking().exchange(HttpRequest.POST("/seed", ""));
-        assertEquals(201, response.code());
-        waitForJms();
-
-        assertTrue(life.isAlive());
-    }
-
-    @Test
-    void triggerGlobalTick() throws InterruptedException {
-        life.seed();
-
-        client.toBlocking().exchange(HttpRequest.POST("/tick", ""));
-        waitForJms();
-        clock++;
-
-        // lonely cell dies
-        assertFalse(life.isAlive());
     }
 
     // --- JMS ---
