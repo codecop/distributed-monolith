@@ -1,10 +1,8 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.events;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import org.codecop.monolith.playground.events.SeedQueueSpy;
-import org.codecop.monolith.playground.events.TickQueueSpy;
 import org.codecop.monolith.playground.gol.Position;
 import org.junit.jupiter.api.Test;
 
