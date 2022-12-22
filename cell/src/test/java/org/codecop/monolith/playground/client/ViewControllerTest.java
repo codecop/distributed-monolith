@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.codecop.monolith.playground.events.ClockedPosition;
 import org.codecop.monolith.playground.events.ReportAliveProducer;
 import org.codecop.monolith.playground.events.Time;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.micronaut.http.HttpRequest;
@@ -43,7 +44,7 @@ class ViewControllerTest {
     }
 
     @Test
-    void seeSomeAlive() throws InterruptedException {
+    void seeSomeAliveY() throws InterruptedException {
         neighbours.report(new ClockedPosition(time.getCurrent(), 0, 1));
         neighbours.report(new ClockedPosition(time.getCurrent(), 1, 1));
         neighbours.report(new ClockedPosition(time.getCurrent(), 2, 1));
@@ -55,6 +56,24 @@ class ViewControllerTest {
                 "###  \n" + //
                 ".....\n" + //
                 "     \n" + //
+                ".....\n",
+                response);
+    }
+
+    @Test
+    @Disabled
+    void seeSomeAliveX() throws InterruptedException {
+        neighbours.report(new ClockedPosition(time.getCurrent(), 1, 1));
+        neighbours.report(new ClockedPosition(time.getCurrent(), 1, 2));
+        neighbours.report(new ClockedPosition(time.getCurrent(), 1, 3));
+        waitForJms();
+        
+        String response = getGrid();
+        assertEquals(//
+                ".....\n" + //
+                " #   \n" + //
+                ".#...\n" + //
+                " #   \n" + //
                 ".....\n",
                 response);
     }

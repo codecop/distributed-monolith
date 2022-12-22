@@ -4,10 +4,10 @@ import static io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicCon
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.codecop.monolith.playground.events.ClockedPosition;
 import org.codecop.monolith.playground.events.ClockedPositionConverter;
-import org.codecop.monolith.playground.gol.Position;
 
 import io.micronaut.jms.annotations.JMSListener;
 import io.micronaut.jms.annotations.Topic;
@@ -19,19 +19,21 @@ import jakarta.inject.Singleton;
 @JMSListener(CONNECTION_FACTORY_BEAN_NAME)
 public class AliveListener {
 
-    final List<Position> livingCells = new ArrayList<>();
+    List<ClockedPosition> livingCells = new ArrayList<>();
 
     @Inject
     private ClockedPositionConverter converter;
 
     @Topic(value = "${config.jms.aliveQueue}")
     public void onLivingNeighbour(@MessageBody ClockedPosition message) {
-        livingCells.add(converter.fromDto(message));
+        livingCells.add(message);
     }
 
     @Topic(value = "${config.jms.tickQueue}")
-    public void onTick(@SuppressWarnings("unused") @MessageBody int clock) {
-        livingCells.clear();
+    public void onTick(@MessageBody int clock) {
+        livingCells = livingCells.stream(). //
+                filter(p -> p.getClock() >= clock). //
+                collect(Collectors.toList());
     }
 
 }
