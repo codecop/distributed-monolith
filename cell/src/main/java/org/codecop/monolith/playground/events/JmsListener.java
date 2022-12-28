@@ -29,15 +29,20 @@ public class JmsListener {
     @Inject
     private ReportAliveProducer reportAlive;
 
+    // FINDING: maybe needs synchronized, did not make a difference
+    
     @Topic(value = "${config.jms.seedQueue}")
-    public void onSeed(@MessageBody ClockedPosition message) {
+    public synchronized void onSeed(@MessageBody ClockedPosition message) {
         // seed ignores clock
-        cell.seed(converter.fromDto(message));
-        broadcastLife();
+        boolean wasMe = cell.seed(converter.fromDto(message));
+        if (wasMe) {
+            // BUG!!!
+            broadcastLife();
+        }
     }
 
     @Topic(value = "${config.jms.aliveQueue}")
-    public void onLivingNeighbour(@MessageBody ClockedPosition message) {
+    public synchronized void onLivingNeighbour(@MessageBody ClockedPosition message) {
         if (time.isStale(message)) {
             time.reportStale("LivingNeighbour", message);
 
@@ -50,7 +55,7 @@ public class JmsListener {
     }
 
     @Topic(value = "${config.jms.tickQueue}")
-    public void onTick(@MessageBody int clock) throws InterruptedException {
+    public synchronized void onTick(@MessageBody int clock) {
         if (!time.isNewer(clock)) {
             time.reportStale("Tick", clock);
             return;
@@ -60,7 +65,8 @@ public class JmsListener {
             time.nextTime();
 
             cell.tick();
-            Thread.sleep(100);
+            // FINDING: maybe needs sleep, did not make a difference
+            // Thread.sleep(100);
 
             broadcastLife(clock);
             time.eachFutureLivingNeighbour(cell::recordLivingNeighbour);

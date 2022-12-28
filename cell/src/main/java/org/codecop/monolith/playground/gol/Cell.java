@@ -13,10 +13,12 @@ public class Cell {
 
     private int countNeighbours;
 
-    public void seed(Position at) {
+    public boolean seed(Position at) {
         if (position.equals(at)) {
             life.seed();
+            return true;
         }
+        return false;
     }
 
     public void recordLivingNeighbour(Position at) {

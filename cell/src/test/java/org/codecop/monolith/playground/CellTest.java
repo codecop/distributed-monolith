@@ -118,16 +118,22 @@ class CellTest {
         waitForJms();
 
         assertTrue(life.isAlive());
+        // and report seed
+        assertEquals(position.getX(), aliveQueueSpy.recorded.getX());
+        assertEquals(position.getY(), aliveQueueSpy.recorded.getY());
     }
 
     @Test
     void seedDifferentCell() throws InterruptedException {
         life.kill();
+        aliveQueueSpy.recorded = null;
 
         seeder.seed(positionRelative(1, 1));
         waitForJms();
 
         assertFalse(life.isAlive());
+        // and not report seed
+        assertNull(aliveQueueSpy.recorded);
     }
 
     @Inject
