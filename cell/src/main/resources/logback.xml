@@ -9,7 +9,9 @@
         </encoder>
     </appender>
 
-    <root level="info">
+    <logger name="org.codecop.monolith.playground" level="info" />
+
+    <root level="error">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
