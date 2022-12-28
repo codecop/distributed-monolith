@@ -50,7 +50,7 @@ public class JmsListener {
     }
 
     @Topic(value = "${config.jms.tickQueue}")
-    public void onTick(@MessageBody int clock) {
+    public void onTick(@MessageBody int clock) throws InterruptedException {
         if (!time.isNewer(clock)) {
             time.reportStale("Tick", clock);
             return;
@@ -60,8 +60,8 @@ public class JmsListener {
             time.nextTime();
 
             cell.tick();
+            Thread.sleep(100);
 
-            // Thread.sleep(1000);
             broadcastLife(clock);
             time.eachFutureLivingNeighbour(cell::recordLivingNeighbour);
             // taskScheduler.schedule(Duration.ofSeconds(1), () -> {
