@@ -42,4 +42,8 @@ public class Cell {
         return position;
     }
 
+    /* for debugging */
+    public int getCountNeighbours() {
+        return countNeighbours;
+    }
 }
