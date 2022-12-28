@@ -19,7 +19,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Time {
 
-    private final Logger logger = LoggerFactory.getLogger(Time.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final Map<Integer, List<Position>> futureNeighbours = new HashMap<>();
     private int current = -1;
 
