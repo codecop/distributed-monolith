@@ -21,7 +21,7 @@ public class Start {
                     "--config", "./src/main/resources/server.properties", //  
                     "--cluster-id", clusterId, //  
             });
-            System.exit(0); // is inside the StorageTool
+            System.exit(0); // exit is inside the StorageTool
         }
 
         kafka.Kafka.main(new String[] { //

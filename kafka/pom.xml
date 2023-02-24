@@ -14,7 +14,7 @@
     <artifactId>distributed-monolith-kafka</artifactId>
 
     <properties>
-        <kafka.version>3.3.1</kafka.version>
+        <kafka.version>3.4.0</kafka.version>
 
         <exec.mainClass>org.codecop.monolith.kafka.Start</exec.mainClass>
     </properties>
@@ -31,6 +31,36 @@
             <version>${kafka.version}</version>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-metadata</artifactId>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-raft</artifactId>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
