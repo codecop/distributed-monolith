@@ -1,6 +1,6 @@
 # Distributed Monolith Service 'shared H2'
 
-This is an [H2 Database Engine](http://h2database.com/).
+This is an [H2 Database Server](http://h2database.com/).
 
 ## Running it locally
 
