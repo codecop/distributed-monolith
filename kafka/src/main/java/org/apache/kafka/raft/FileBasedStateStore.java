@@ -149,6 +149,7 @@ public class FileBasedStateStore implements QuorumStateStore {
             writer.write(jsonState.toString());
             writer.flush();
             fileOutputStream.getFD().sync();
+            fileOutputStream.close(); // SEE https://github.com/apache/kafka/pull/12763/commits/e3ba06be23925e373eb2597cb9acb10d4993e9ba#diff-07e99254e2b719267c035e3ab57c76ab0b828660dd6c15cf9821dc365a2b6b9a
             Utils.atomicMoveWithFallback(temp.toPath(), stateFile.toPath());
         } catch (IOException e) {
             throw new UncheckedIOException(
