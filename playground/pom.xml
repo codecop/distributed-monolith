@@ -46,7 +46,7 @@
         </dependency>
         -->
         <dependency>
-            <!-- copmpile DTO -->
+            <!-- compile DTO -->
             <groupId>io.micronaut.serde</groupId>
             <artifactId>micronaut-serde-jackson</artifactId>
         </dependency>
@@ -128,6 +128,17 @@
         </dependency>
 
         <dependency>
+            <!-- Kafka -->
+            <groupId>io.micronaut.kafka</groupId>
+            <artifactId>micronaut-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <!-- Kafka Reactor runtime -->
+            <groupId>io.micronaut.reactor</groupId>
+            <artifactId>micronaut-reactor</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>runtime</scope>
@@ -156,6 +167,17 @@
         </dependency>
         -->
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Kafka -->
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

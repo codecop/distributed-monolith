@@ -9,6 +9,6 @@ import jakarta.inject.Singleton;
 @Singleton
 public class TextStore {
 
-    List<String> messages = Collections.synchronizedList(new ArrayList<>());
+    public List<String> messages = Collections.synchronizedList(new ArrayList<>());
 
 }
