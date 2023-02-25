@@ -23,6 +23,10 @@ public class Student {
         setName(string);
     }
 
+    public Long getId() {
+        return id;
+    }
+    
     public String getName() {
         return name;
     }

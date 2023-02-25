@@ -12,6 +12,8 @@ public class JpaController {
 
     @Inject
     private GenreRepository repository;
+    @Inject
+    private RemoteRepository remoteRepo;
 
     @Get("/jpa/{number}")
     public String issue(@PathVariable Integer number) {
@@ -20,6 +22,7 @@ public class JpaController {
 
         Student s = new Student("" + number);
         repository.save(s);
+        remoteRepo.save(new Student("remote " + number));
         System.out.println(s.id);
         return "Issue # " + number + "!";
     }
