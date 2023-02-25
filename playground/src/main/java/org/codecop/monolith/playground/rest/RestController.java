@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.rest;
 
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;

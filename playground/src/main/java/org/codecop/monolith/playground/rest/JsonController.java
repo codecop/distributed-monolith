@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.rest;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;

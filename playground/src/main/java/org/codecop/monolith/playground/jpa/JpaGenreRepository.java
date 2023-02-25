@@ -1,19 +1,22 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.jpa;
 
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.codecop.monolith.playground.jpa.GenreRepository;
+import org.codecop.monolith.playground.jpa.Student;
+
 import io.micronaut.transaction.annotation.ReadOnly;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class GenreRepositoryImpl implements GenreRepository {
+public class JpaGenreRepository implements GenreRepository {
 
     private final EntityManager entityManager;
 
-    public GenreRepositoryImpl(EntityManager entityManager) {
+    public JpaGenreRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

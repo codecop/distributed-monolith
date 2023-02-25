@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.jms;
 
 import java.util.ArrayList;
 import java.util.Collections;

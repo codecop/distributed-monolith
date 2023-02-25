@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.rest;
 
 import io.micronaut.serde.annotation.Serdeable;
 

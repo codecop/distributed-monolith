@@ -1,9 +1,8 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 
 @MicronautTest
-class DistributedMonolithTest {
+class RestTest {
 
     @Inject
     EmbeddedApplication<?> application;
@@ -27,7 +26,7 @@ class DistributedMonolithTest {
     void testItWorks() {
         Assertions.assertTrue(application.isRunning());
     }
-
+    
     @Inject
     @Client("/")
     HttpClient client;
@@ -70,35 +69,5 @@ class DistributedMonolithTest {
                 () -> client.toBlocking().exchange("/return/"));
         assertEquals(404, e.getStatus().getCode());
     }
-
-    @Test
-    void testHtmlResponse() {
-        String response = client.toBlocking().retrieve(HttpRequest.GET("/hello.html"));
-        System.out.println(response);
-        assertTrue(response.startsWith("<!DOCTYPE html>"));
-    }
-
-    @Test
-    void testJpa() {
-        String body = client.toBlocking().retrieve("/jpa/12");
-        assertNotNull(body);
-        assertEquals("Issue # 12!", body);
-
-        // do again to see save
-        client.toBlocking().retrieve("/jpa/12");
-    }
-
-//x    @Inject
-//x    StringMessageProducer producer;
-//x    @Inject
-//x    TextStore store;
-//x
-//x    @Test
-//x    void sendAndReceiveJMS() throws InterruptedException {
-//x        assertEquals(0, store.messages.size());
-//x        producer.send("This is a message");
-//x        Thread.sleep(1000);
-//x        assertEquals(1, store.messages.size());
-//x    }
 
 }

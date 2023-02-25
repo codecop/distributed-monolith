@@ -1,4 +1,4 @@
-package org.codecop.monolith.playground;
+package org.codecop.monolith.playground.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
