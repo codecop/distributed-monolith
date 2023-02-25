@@ -26,7 +26,7 @@ datasources:
     password: ''
     driverClassName: org.h2.Driver
   remote:
-    url: jdbc:h2:tcp://localhost:9092/~/devDb;LOCK_TIMEOUT=10000
+    url: jdbc:h2:tcp://localhost:9095/~/devDb;LOCK_TIMEOUT=10000
     username: sa
     password: ''
     driverClassName: org.h2.Driver

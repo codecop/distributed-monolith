@@ -6,13 +6,13 @@ public class Start {
         // see https://www.h2database.com/javadoc/org/h2/tools/Server.html
         Server.main(new String[] { //
                 "-tcp", //
-                "-tcpPort", "9092", //
+                "-tcpPort", "9095", //
                 "-tcpAllowOthers", //
                 "-tcpPassword", "secretShutdown99", //
                 "-ifNotExists", //
                 // debug web console
                 "-web", //
-                "-webPort", "8082", //
+                "-webPort", "8085", //
         });
     }
 
