@@ -24,7 +24,7 @@ class JmsTest {
         producer.send("This is a message"); // have to send two for one to arrive?
         waitForJms();
         assertEquals(1, store.messages.size());
-        System.out.println(store.messages);
+        // System.out.println(store.messages);
     }
 
     private void waitForJms() throws InterruptedException {

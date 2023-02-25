@@ -18,7 +18,7 @@ public class DataInitializer implements ApplicationEventListener<ApplicationStar
     @Override
     public void onApplicationEvent(ApplicationStartupEvent event) {
         tx.executeWrite(status -> {
-            this.posts.save(new Student("a"));
+            this.posts.save(new Student("DataInitializer::onApplicationEvent"));
             return null;
         });
 

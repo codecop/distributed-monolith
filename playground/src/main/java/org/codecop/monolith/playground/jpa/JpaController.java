@@ -18,12 +18,12 @@ public class JpaController {
     @Get("/jpa/{number}")
     public String issue(@PathVariable Integer number) {
         Optional<Student> findById = repository.findById(1);
-        System.out.println(findById);
+        System.out.println("JpaController: " + findById);
 
         Student s = new Student("" + number);
         repository.save(s);
         remoteRepo.save(new Student("remote " + number));
-        System.out.println(s.id);
+        System.out.println("JpaController: id=" + s.id);
         return "Issue # " + number + "!";
     }
 
