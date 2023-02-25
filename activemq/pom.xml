@@ -31,6 +31,12 @@
             <artifactId>activemq-pool</artifactId>
             <version>${activemq.version}</version>
         </dependency>
+        <!-- for console -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-console</artifactId>
+            <version>${activemq.version}</version>
+        </dependency>
 
         <!-- required by ActiveMQ -->
         <dependency>
