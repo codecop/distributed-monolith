@@ -31,10 +31,3 @@ public class Start {
     }
 
 }
-
-/*
- * kafka-topics --bootstrap-server PLAINTEXT://:9092 --create --topic analytics
- * kafka-topics --bootstrap-server PLAINTEXT://:9092 --list 
- * kafka-console-consumer --bootstrap-server PLAINTEXT://:9092 --from-beginning --topic analytics
- * kafka-console-producer --bootstrap-server PLAINTEXT://:9092 --topic analytics
- */
