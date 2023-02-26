@@ -132,11 +132,6 @@
             <groupId>io.micronaut.kafka</groupId>
             <artifactId>micronaut-kafka</artifactId>
         </dependency>
-        <dependency>
-            <!-- Kafka Reactor runtime -->
-            <groupId>io.micronaut.reactor</groupId>
-            <artifactId>micronaut-reactor</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -166,6 +161,13 @@
             <scope>test</scope>
         </dependency>
         -->
+        <dependency>
+            <!-- timing tests -->
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.2.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
