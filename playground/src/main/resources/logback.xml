@@ -9,7 +9,17 @@
         </encoder>
     </appender>
 
+    <!-- these log a lot of lines on INFO -->
+    <logger name="org.apache.kafka.clients.producer.ProducerConfig" level="WARN" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="WARN" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
+
+

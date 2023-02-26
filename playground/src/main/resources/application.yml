@@ -39,7 +39,6 @@ netty:
     allocator:
       max-order: 3
      
-#tag::kafka[]
 kafka:
-  enabled: true
-#end::kafka[]
+  bootstrap:
+        servers: localhost:9092

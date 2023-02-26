@@ -7,9 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
-import reactor.core.publisher.Flux;
 
-@MicronautTest()
+@MicronautTest
 class KafkaTest {
 
     @Inject
@@ -24,16 +23,12 @@ class KafkaTest {
 
         BookAnalytics book = new BookAnalytics("1234", 1);
         sender.updateAnalytics(book);
-        Flux.from(sender.updateAnalytics(book)). //
-                map(b -> b.getBookIsbn());
 
         waitForKafka();
-        assertEquals(2, store.messages.size());
-        System.out.println(store.messages);
-        // see https://guides.micronaut.io/latest/micronaut-kafka-gradle-java.html
+        assertEquals(1, store.messages.size());
     }
 
     private void waitForKafka() throws InterruptedException {
-        Thread.sleep(1_000);
+        Thread.sleep(5_000);
     }
 }
