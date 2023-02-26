@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: distributedMonolith
+    name: playground
   server:
     port: 80
   router:
@@ -21,18 +21,18 @@ config.jms:
   
 datasources:
   default:
-    url: jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:playgroundDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: ''
     driverClassName: org.h2.Driver
   remote:
-    url: jdbc:h2:tcp://localhost:9095/~/devDb;LOCK_TIMEOUT=10000
+    url: jdbc:h2:tcp://localhost:9095/~/playgroundDb;LOCK_TIMEOUT=10000
     username: sa
     password: ''
     driverClassName: org.h2.Driver
 
 jpa.default.properties.hibernate.hbm2ddl.auto: update
-jpa.default.entity-scan.packages: org.codecop.monolith
+jpa.default.entity-scan.packages: org.codecop.monolith.playground
 
 netty:
   default:

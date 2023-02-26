@@ -1,4 +1,4 @@
-# Distributed Monolith
+# Distributed Monolith playground
 
   mvnw mn:run
   
