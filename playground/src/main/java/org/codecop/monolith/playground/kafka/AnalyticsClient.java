@@ -6,10 +6,10 @@ import io.micronaut.configuration.kafka.annotation.Topic;
 @KafkaClient
 public interface AnalyticsClient {
 
-    @Topic("analytics")
+    @Topic("playground-analytics")
     void updateAnalytics(BookAnalytics book);
 
-    // @Topic("analytics")
+    // @Topic("playground-analytics")
     // void sendMessage(@KafkaKey String time, String message);
 
     // see https://guides.micronaut.io/latest/micronaut-kafka-gradle-java.html

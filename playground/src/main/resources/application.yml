@@ -17,7 +17,7 @@ micronaut:
         connection-string: tcp://localhost:61616
 
 config.jms:
-  destinationQueue: example-messages
+  destinationQueue: playground-messages
   
 datasources:
   default:

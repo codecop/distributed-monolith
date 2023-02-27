@@ -13,13 +13,13 @@ public class AnalyticsListener {
     @Inject
     TextStore store;
 
-    @Topic("analytics")
+    @Topic("playground-analytics")
     public void updateAnalytics(BookAnalytics book) {
         store.messages.add(book.getBookIsbn());
         // System.out.println("RECEIVED " + book);
     }
 
-    //    @Topic("analytics")
+    //    @Topic("playground-analytics")
     //    public void receive(@KafkaKey String time, String message) {
     //        System.out.println("Received Message   - " + time + " and " + message);
     //    }
