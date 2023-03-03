@@ -11,7 +11,9 @@ cd kafka
 ../mvnw compile exec:java
 ```
 
-Or you can run it from your IDE.
+Or you can run it from your IDE. As it needs to format its data storage, you need to start it twice.
+
+Kafka is listening on `PLAINTEXT://localhost:9092` and its controller on `localhost:9093`. 
 
 ### Notes on local installation using Kraft
 

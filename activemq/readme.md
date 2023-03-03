@@ -12,3 +12,5 @@ cd activemq
 ```
 
 Or you can run it from your IDE.
+
+ActiveMQ is listening on `tcp://localhost:61616`.

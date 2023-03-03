@@ -13,4 +13,5 @@ cd shared-h2
 
 Or you can run it from your IDE.
 
-You can then access web console UI here: http://localhost:8085/
+H2 is listening on `tcp://localhost:9095`. 
+You can then access its web console UI here: http://localhost:8085/
