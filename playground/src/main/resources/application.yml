@@ -2,7 +2,7 @@ micronaut:
   application:
     name: playground
   server:
-    port: 80
+    port: 8080
   router:
     static-resources: 
         default:
