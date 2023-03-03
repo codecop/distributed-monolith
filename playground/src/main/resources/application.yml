@@ -10,6 +10,11 @@ micronaut:
             mapping: /**
             paths: classpath:public
 
+  http:
+    services:
+      foo:
+        url: 'http://127.0.0.1:9090'
+
   jms:
     activemq:
       classic:
