@@ -141,6 +141,15 @@ if __FILE__ == $0
     source = ARGV[1]
   end
 
+  if ! File.exist? source or ! File.directory? source
+    puts "Source module #{source} not found/not a directory"
+    exit
+  end
+  if target !~ /^[a-zA-Z][a-zA-Z0-9_]+$/ 
+    puts "Target module name #{target} must be an identifier"
+    exit
+  end
+
   copy_template(source, target)
   delete_docs(source, target)
   change_packages(source, target)
