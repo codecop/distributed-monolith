@@ -17,7 +17,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 
-@MicronautTest
+@MicronautTest(environments = { "wiremock" })
 class JsonRestClientTest {
 
     @Inject
