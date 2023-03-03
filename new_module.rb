@@ -116,6 +116,16 @@ def add_module(lines, target)
   end
 end
 
+Base_port = 8080
+
+def change_port(target)
+  puts '--- change port:'
+
+  new_port = Base_port + Dir['*'].find_all { |dir| File.directory? dir}.size - 4
+  change_lines("#{target}/README.md", Base_port.to_s, new_port.to_s)
+  change_lines("#{target}/src/main/resources/application.yml", Base_port.to_s, new_port.to_s)
+end
+
 if __FILE__ == $0
 
   if ARGV.length < 1 or ARGV.length > 2 or ARGV.include?('-help')
@@ -136,5 +146,6 @@ if __FILE__ == $0
   change_packages(source, target)
   change_files(source, target)
   change_pom(target)
+  change_port(target)
 
 end
