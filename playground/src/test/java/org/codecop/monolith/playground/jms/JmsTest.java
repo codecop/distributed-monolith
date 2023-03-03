@@ -21,7 +21,7 @@ class JmsTest {
         assertEquals(0, store.messages.size());
         waitForJms();
         producer.send("This is a message");
-        producer.send("This is a message"); // have to send two for one to arrive?
+        producer.send("This is a message"); // have to send two for one to arrive? Because one test is before this one.
         waitForJms();
         assertEquals(1, store.messages.size());
         // System.out.println(store.messages);
