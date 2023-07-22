@@ -25,3 +25,8 @@ out/
 .apt_generated/
 .apt_generated_tests/
 processors/
+
+# Peter local
+TODO*.txt
+Weiter*.txt
+Idee -*.txt
